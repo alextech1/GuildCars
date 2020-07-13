@@ -1,0 +1,151 @@
+﻿@model List<GuildCars.UI.Models.CarViewModel>
+@{
+    ViewBag.Title = "Sales";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Sales</h2>
+    </div>
+
+</div>
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+
+<style>
+    .column {
+        float: left;
+    }
+
+    /* Set width length for the left, right and middle columns */
+    .one {
+        width: 25.00%;
+    }
+
+    .two {
+        width: 25.00%;
+    }
+
+    .three {
+        width: 25.00%;
+    }
+
+    .four {
+        width: 25.00%
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+
+@if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+{
+    <h2>Administrator</h2>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Search</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <form id="searchForm" class="form-inline">
+            <div class="form-group">
+                <label for="make">Make</label>
+                <input type="text" class="form-control" id="make">
+            </div>
+            <div class="form-group">
+                <label for="model">Model</label>
+                <input type="text" class="form-control" id="model">
+            </div>
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="text" class="form-control" id="year">
+            </div>
+            <div id="dropdownlist" style="display: none;">
+                <label for="cars">OnSale:</label>
+                <select id="onsale" name="onsale">
+                    <option value="false">No</option>
+                    <option selected="selected" value="true">Yes</option>
+                </select>
+            </div>
+            <button id="btnSearch" class="btn btn-primary">Search</button>
+            <br />
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div id="searchResults" class="col-xs-12">
+
+    </div>
+</div>
+
+    <script>
+        $(document).ready(function () {
+            $("#searchForm").submit(function (e) {
+                search();
+                return false;
+            });
+        });
+
+        function search() {
+            var params;
+
+            params = 'make=' + $('#make').val() + '&model=' + $('#model').val() + '&year=' +
+                $('#year').val() + '&onsale=' + $('#onsale').val();
+            console.log(params)
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/cars/search?' + params,
+                success: function (results) {
+                    console.log("success");
+                    $('#searchResults').empty();
+
+                    $.each(results, function (index, car) {
+                        var html = '<div class="row" style="border: 2px solid #0094ff;">' +
+                            '<div class="column one">' +
+                            `<h7 class="card-title text-primary"> ${car.Year} ${car.Make.MakeName} ${car.Model.ModelName}</h7><br />` +
+                            `<img src="/Images/${car.Photo}" style="height:50px; width:50px;" />` +
+                            '</div>' +
+                            '<div class="column two">' +
+                            '<h7 class="card-title text-primary">' + car.BodyStyle.BodyStyleName + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.Transmission.TransmissionType + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.ExteriorColor.Color + '</h7>' +
+                            '</div>' +
+                            '<div class="column three">' +
+                            '<h7 class="column card-title text-primary">' + car.InteriorColor.Color + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.Mileage + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.VIN + '</h7>' +
+                            '</div>' +
+                            '<div class="column four">' +
+                            '<h7 class="column card-title text-primary">' + car.SalePrice + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.MSRP + '</h7>' +
+                            '<br/>' +
+                            '<div class="col-sm-6">' +
+                            '<a class="btn btn-primary" href="/Sales/Purchase/' + car.CarID + '">Purchase</a><br/>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div> <br/>'
+
+
+                        $('#searchResults').append(html.toString());
+                    });
+
+                },
+                error: function () {
+                    alert('Error performing search, try again later!')
+                },
+                done: function () {
+                    alert('Search AJAX complete')
+                }
+            });
+
+        }
+
+
+    </script>

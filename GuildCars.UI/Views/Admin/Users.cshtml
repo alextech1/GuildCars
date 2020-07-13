@@ -1,0 +1,60 @@
+﻿@model GuildCars.UI.Models.GroupedUserViewModel
+@{
+    ViewBag.Title = "Users";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h2>Users</h2>
+
+<div>
+    <table>
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Edit</th>
+        </tr>
+
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.LastName</td>
+                <td>@user.FirstName</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td><a class="btn btn-primary" href="/Admin/EditUser/@user.UserID">Edit</a></td>
+            </tr>
+        }
+
+
+        @foreach (var user in Model.Admins)
+        {
+            <tr>
+                <td>@user.LastName</td>
+                <td>@user.FirstName</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td><a class="btn btn-primary" href="/Admin/EditUser/@user.UserID">Edit</a></td>
+            </tr>
+        }
+
+    </table>
+</div>

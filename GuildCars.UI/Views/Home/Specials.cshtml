@@ -1,0 +1,53 @@
+﻿@model GuildCars.UI.Models.SpecialsViewModel
+@{
+    ViewBag.Title = "Specials";
+}
+
+<style>
+    .column {
+        float: left;
+    }
+
+    /* Set width length for the left, right and middle columns */
+    .one {
+        height: 120px;
+        width: 15%;
+    }
+
+    .two {
+        width: 70%;
+    }
+
+    .three {
+        width: 15%;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Specials</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @foreach (var special in @Model.SpecialsList)
+        {
+            <div class="row" style="border: 2px solid #0094ff;">
+                <div class="column one">
+                    <img src="@Url.Content("~/Images/" + special.ImageFileName)" style="height: 80px; width:80px; margin:10px auto 10px; display:block" />
+                </div>
+                <div class="column two">
+                    <br />
+                    <h7 class="card-title text-primary">@special.Title</h7><br />
+                    <h7 class="card-title text-primary">@special.Description </h7><br />
+                    <br />
+                </div>
+                <div class="column three">
+                    <br />
+                    
+                </div>
+            </div>
+        }
+    </div>
+</div>

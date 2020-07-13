@@ -1,0 +1,12 @@
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.csproj.CoreCompileInputs.cache
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\bin\Debug\GuildCars.Models.dll.config
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\bin\Debug\GuildCars.Models.dll
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\bin\Debug\GuildCars.Models.pdb
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\bin\Debug\EntityFramework.dll
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\bin\Debug\EntityFramework.xml
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.csproj.CopyComplete
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.dll
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.pdb
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.csprojAssemblyReference.cache

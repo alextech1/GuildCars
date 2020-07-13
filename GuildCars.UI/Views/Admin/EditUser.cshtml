@@ -1,0 +1,93 @@
+﻿@model GuildCars.UI.Models.UserEditViewModel
+@{
+    ViewBag.Title = "Edit User";
+}
+
+
+<style>
+    .col-25 {
+        float: left;
+        width: 50%;
+        padding-right: 16px;
+    }
+
+    .largeTextBox {
+        height: 140px;
+        min-width: 97%;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-6">
+        <h2>Edit Vehicle</h2>
+        @using (Html.BeginForm("EditUser", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmEditUser" }))
+        {
+            @Html.ValidationSummary()
+            @Html.HiddenFor(x => x.UserID)
+            <div class="row">
+                <div class="form-group col-25">
+                    <label>First Name</label>
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-25">
+                    <label>Last Name</label>
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-25">
+                    <label>Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-25">
+                    <label>Role</label>
+                    @Html.DropDownListFor(m => m.Role.RoleID, new SelectList(Model.Roles, "RoleID", "RoleName", Model.RolesID), new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-25">
+                    <label>Password</label>
+                    @Html.PasswordFor(m => m.Password, new { id = "password", @class = "form-control password" })
+                </div>
+                <div class="form-group col-25">
+                    <label>Confirm Password</label>
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { id = "confirm_password", @class = "form-control confirm_password" })
+                    <span id='message'></span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary">Save</button>
+
+        }
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#frmEditUser').validate({
+                rules: {
+                    'FirstName': {
+                        required: true
+                    },
+                    'LastName': {
+                        required: true
+                    },
+                    'Email': {
+                        required: true
+                    },
+                    'Role': {
+                        required: true
+                    }
+                }
+            });
+            $('#password, #confirm_password').on('keyup', function () {
+                if ($('#password').val() == $('#confirm_password').val()) {
+                    $('#message').html('Matches').css('color', 'green');
+                } else
+                    $('#message').html('Not Matching').css('color', 'red');
+            });
+        });
+    </script>
+}

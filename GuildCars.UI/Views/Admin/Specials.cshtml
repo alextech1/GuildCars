@@ -1,0 +1,76 @@
+﻿@model GuildCars.UI.Models.SpecialsViewModel
+@{
+    ViewBag.Title = "Specials";
+}
+
+<style>
+    .column {
+        float: left;
+    }
+
+    /* Set width length for the left, right and middle columns */
+    .one {
+        height: 120px;
+        width: 15%;
+    }
+
+    .two {
+        width: 70%;
+    }
+
+    .three {
+        width: 15%;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-6">
+        <h2>Add Special</h2>
+        @using (Html.BeginForm("Specials", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddSpecial" }))
+        {
+            <div class="row">
+                <div class="form-group">
+                    <label>Title</label>
+                    @Html.TextBoxFor(m => m.Specials.Title, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    @Html.TextAreaFor(m => m.Specials.Description, new { @class = "form-control largeTextBox" })
+                </div>
+            </div>
+            <button class="btn btn-primary">Add</button>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Specials</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @foreach (var special in @Model.SpecialsList)
+        {
+            <div class="row" style="border: 2px solid #0094ff;">
+                <div class="column one">
+                    <img src="@Url.Content("~/Images/" + special.ImageFileName)" style="height: 80px; width:80px; margin:10px auto 10px; display:block" />
+                </div>
+                <div class="column two">
+                    <br />
+                    <h7 class="card-title text-primary">@special.Title</h7><br />
+                    <h7 class="card-title text-primary">@special.Description </h7><br />
+                    <br />
+                </div>
+                <div class="column three">
+                    <br />
+                    <div class="col-sm-6">
+                        <a class="btn btn-danger" href="/Admin/DeleteSpecial/@special.SpecialsID" onclick="return confirm('Are you sure you want to delete @special.Title?'">
+                        Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿@model GuildCars.UI.Models.CarViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Details</h2>
+        <img src="@Url.Content("~/Images/" + Model.ImageFileName)" style="height : 100px;width : 100px;" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-8">
+        <table>
+            <tbody>
+                <tr>
+
+                    <td><strong>@Model.Year @Model.MakeName @Model.ModelName</strong></td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td><strong>Body Style:</strong></td>
+                    <td>@Model.BodyStyleName</td>
+                </tr>
+                <tr>
+                    <td><strong>Transmission:</strong></td>
+                    <td>@Model.TransmissionType</td>
+                </tr>
+                <tr>
+                    <td><strong>Exterior Color:</strong></td>
+                    <td>@Model.ExteriorColorName</td>
+                </tr>
+                <tr>
+                    <td><strong>Interior Color:</strong></td>
+                    <td>@Model.InteriorColorName</td>
+                </tr>
+                <tr>
+                    <td><strong>Mileage:</strong></td>
+                    <td>@Model.Mileage</td>
+                </tr>
+                <tr>
+                    <td><strong>VIN:</strong></td>
+                    <td>@Model.VIN</td>
+                </tr>
+                <tr>
+                    <td><strong>Sale Price:</strong></td>
+                    <td>@Model.SalePrice</td>
+                </tr>
+                <tr>
+                    <td><strong>Description:</strong></td>
+                    <td>@Model.Description</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        @Html.ActionLink("Edit", "Edit", "Admin", new { id = @Model.CarVMID }, new { @class = "btn btn-primary" })
+    </div>
+    <div class="col-xs-12">
+        @Html.ActionLink("Contact Us", "Contact", "Home", new { vin = @Model.VIN }, new { @class = "btn btn-primary" })
+    </div>
+</div>
+
+

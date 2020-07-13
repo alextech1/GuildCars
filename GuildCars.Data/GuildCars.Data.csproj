@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{70044D0F-86B2-49C9-9A1F-02B99003B564}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GuildCars.Data</RootNamespace>
+    <AssemblyName>GuildCars.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ADO\GuildRepositoryADO.cs" />
+    <Compile Include="EF\GuildRepositoryEF.cs" />
+    <Compile Include="Factories\BodyStyleFactory.cs" />
+    <Compile Include="Factories\ConditionFactory.cs" />
+    <Compile Include="Factories\ExteriorColorFactory.cs" />
+    <Compile Include="Factories\GuildRepositoryFactory.cs" />
+    <Compile Include="Factories\InteriorColorFactory.cs" />
+    <Compile Include="Factories\MakeFactory.cs" />
+    <Compile Include="Factories\ModelFactory.cs" />
+    <Compile Include="Factories\PurchaseTypeFactory.cs" />
+    <Compile Include="Factories\RoleFactory.cs" />
+    <Compile Include="Factories\SpecialsFactory.cs" />
+    <Compile Include="Factories\StateFactory.cs" />
+    <Compile Include="Factories\TransactionFactory.cs" />
+    <Compile Include="Factories\TransmissionFactory.cs" />
+    <Compile Include="Interfaces\IBodyStyleRepository.cs" />
+    <Compile Include="Interfaces\IConditionRepository.cs" />
+    <Compile Include="Interfaces\IExteriorColorRepository.cs" />
+    <Compile Include="Interfaces\IGuildRepository.cs" />
+    <Compile Include="Interfaces\IInteriorColorRepository.cs" />
+    <Compile Include="Interfaces\IMakeRepository.cs" />
+    <Compile Include="Interfaces\IModelRepository.cs" />
+    <Compile Include="Interfaces\IPurchaseTypeRepository.cs" />
+    <Compile Include="Interfaces\IRoleRepository.cs" />
+    <Compile Include="Interfaces\ISpecialsRepository.cs" />
+    <Compile Include="Interfaces\IStateRepository.cs" />
+    <Compile Include="Interfaces\ITransactionRepository.cs" />
+    <Compile Include="Interfaces\ITransmissionRepository.cs" />
+    <Compile Include="Mockup\BodyStyleRepositoryMock.cs" />
+    <Compile Include="Mockup\ConditionRepositoryMock.cs" />
+    <Compile Include="Mockup\ExteriorColorRepositoryMock.cs" />
+    <Compile Include="Mockup\GuildRepositoryMock.cs" />
+    <Compile Include="Mockup\InteriorColorRepositoryMock.cs" />
+    <Compile Include="Mockup\MakeRepositoryMock.cs" />
+    <Compile Include="Mockup\ModelRepositoryMock.cs" />
+    <Compile Include="Mockup\PurchaseTypeRepositoryMock.cs" />
+    <Compile Include="Mockup\RoleRepositoryMock.cs" />
+    <Compile Include="Mockup\SpecialsRepositoryMock.cs" />
+    <Compile Include="Mockup\StateRepositoryMock.cs" />
+    <Compile Include="Mockup\TransactionRepositoryMock.cs" />
+    <Compile Include="Mockup\TransmissionRepositoryMock.cs" />
+    <Compile Include="Settings.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GuildCars.Models\GuildCars.Models.csproj">
+      <Project>{E112D84F-6349-4DE0-B140-9728DAFB8506}</Project>
+      <Name>GuildCars.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
