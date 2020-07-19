@@ -19,11 +19,10 @@ namespace GuildCars.UI.Controllers
 {
     public class AdminController : Controller
     {
-        //not working :(
-        private readonly ApplicationDbContext _contxt;
-        public AdminController(ApplicationDbContext contxt)
+        private readonly ApplicationDbContext _context;
+        public AdminController(ApplicationDbContext context)
         {
-            _contxt = contxt;
+            _context = context;
         }
         public AdminController() { }
 
@@ -31,15 +30,13 @@ namespace GuildCars.UI.Controllers
         {
             CarViewModel carViewModel = new CarViewModel();
 
-            carViewModel.IGuildRepository = GuildRepositoryFactory.GetRepository();
+            var carRepo = GuildRepositoryFactory.GetRepository();
 
-            carViewModel.Cars = carViewModel.IGuildRepository.GetAllCars();
-
-            var carList = carViewModel.Cars;
+            List<Car> carList = carRepo.GetAllCars();
 
             List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
             {
-                CarVMID = x.CarID,
+                CarID = x.CarID,
                 Year = x.Year,
                 MakeName = x.Make.MakeName,
                 ModelName = x.Model.ModelName,
@@ -69,7 +66,7 @@ namespace GuildCars.UI.Controllers
 
             List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
             {
-                CarVMID = x.CarID,
+                CarID = x.CarID,
                 Year = x.Year,
                 MakeName = x.Make.MakeName,
                 ModelName = x.Model.ModelName,
@@ -126,7 +123,7 @@ namespace GuildCars.UI.Controllers
 
             var carvm = carViewModel.IGuildRepository.GetCarById(id);
 
-            carViewModel.CarVMID = carvm.CarID;
+            carViewModel.CarID = carvm.CarID;
             carViewModel.Year = carvm.Year;
             carViewModel.MakeName = carvm.Make.MakeName;
             carViewModel.ModelName = carvm.Model.ModelName;
@@ -206,10 +203,14 @@ namespace GuildCars.UI.Controllers
                     model.Car.Make = new Make();
                     model.Car.Make.MakeID = model.Car.MakeID;
                     model.Car.Make.MakeName = makesRepo.GetMakeById(model.Car.MakeID).MakeName;
+                    model.Car.Make.DateAdded = DateTime.Now.ToString("MM/dd/yyyy");
+                    model.Car.Make.UserID = model.Car.UserID;
                     model.Car.Model = new Model();
                     model.Car.Model.ModelID = model.Car.ModelID;
+                    model.Car.Model.MakeID = model.Car.MakeID;
                     model.Car.Model.ModelName = modelRepo.GetModelById(model.Car.ModelID).ModelName;
-                    //model.Car.Photo = "carlogo.png";
+                    model.Car.Model.DateAdded = DateTime.Now.ToString("MM/dd/yyyy");
+                    model.Car.Model.UserID = model.Car.UserID;
                     model.Car.DateAdded = DateTime.Now.ToString("MM/dd/yyyy");
                     model.Car.Transmission = new Transmission();
                     model.Car.Transmission.TransmissionID = model.Car.TransmissionID;
@@ -237,15 +238,12 @@ namespace GuildCars.UI.Controllers
 
                     carRepo.InsertCar(model.Car);
 
-                    using (var ctx = new ApplicationDbContext())
-                    {
-                        ctx.Cars.Add(model.Car);
+                    _context.Cars.Add(model.Car);
 
-                        if (model.Car == null)
-                            model.Car = new Car();
+                    if (model.Car == null)
+                        model.Car = new Car();
 
-                        ctx.SaveChanges();
-                    }
+                    _context.SaveChanges();
 
                     return RedirectToAction("Vehicles");
                 }
@@ -385,9 +383,8 @@ namespace GuildCars.UI.Controllers
 
         public ActionResult Users()
         {
-            var context = new ApplicationDbContext();
             var rolesRepo = RoleFactory.GetRepository();
-            var allUsers = context.Users.ToList();
+            var allUsers = _context.Users.ToList();
             var users = allUsers.Where(x => x.RoleID == 1).ToList();
             var userVM = users.Select(user => new UserViewModel
             {
@@ -412,29 +409,55 @@ namespace GuildCars.UI.Controllers
             return View(model);
         }
 
+        public ActionResult Makes()
+        {
+            var allUsers = _context.Users.ToList();
+            var allMakes = _context.Makes.ToList();
+
+            var makesVM = allMakes.Select(x => new MakesViewModel
+            {
+                MakeName = x.MakeName,
+                DateAdded = x.DateAdded,
+                User = allUsers.Where(y => y.Id == x.UserID).Select(y => y.Email).FirstOrDefault()
+            }).ToList();
+
+            return View(makesVM);
+        }
+
+        public ActionResult Models()
+        {
+            var allUsers = _context.Users.ToList();
+            var allMakes = _context.Makes.ToList();
+            var allModels = _context.Models.ToList();
+
+            var makesVM = allModels.Select(x => new ModelsViewModel
+            {
+                MakeName = allMakes.Where(y => y.MakeID == x.MakeID).Select(y => y.MakeName).FirstOrDefault(),
+                ModelName = x.ModelName,
+                DateAdded = x.DateAdded,
+                User = allUsers.Where(y => y.Id == x.UserID).Select(y => y.Email).FirstOrDefault()
+            }).ToList();
+
+            return View(makesVM);
+        }
+
         public ActionResult EditUser(string id)
         {
-            using (var ctx = new ApplicationDbContext())
+            var rolesRepo = RoleFactory.GetRepository();
+            var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
+            var appUser = userMgr.FindById(id);
+
+            var user = new UserEditViewModel
             {
-                var model = new UserEditViewModel();
+                UserID = appUser.Id,
+                FirstName = appUser.FirstName,
+                LastName = appUser.LastName,
+                Email = appUser.Email,
+                Roles = rolesRepo.GetRoles(),
+                RolesID = appUser.RoleID
+            };
 
-                var rolesRepo = RoleFactory.GetRepository();
-                var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ctx));
-                var appUser = userMgr.FindById(id);
-                //var appUser = userMgr.FindByEmail(email);
-
-                var user = new UserEditViewModel
-                {
-                    UserID = appUser.Id,
-                    FirstName = appUser.FirstName,
-                    LastName = appUser.LastName,
-                    Email = appUser.Email,
-                    Roles = rolesRepo.GetRoles(),
-                    RolesID = appUser.RoleID
-                };
-
-                return View(user);
-            }
+            return View(user);
         }
 
         [HttpPost]

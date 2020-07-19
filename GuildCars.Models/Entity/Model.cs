@@ -17,5 +17,7 @@ namespace GuildCars.Models.Entity
         [ForeignKey("MakeID")]
         public virtual Make Make { get; set; }               
         public string ModelName { get; set; }
+        public string UserID { get; set; }
+        public string DateAdded { get; set; }
     }
 }

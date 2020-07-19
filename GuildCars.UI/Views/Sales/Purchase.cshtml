@@ -17,70 +17,95 @@
     }
 </style>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-8 col-md-6">
-        <h2>Purchase Vehicle</h2>
-        @using (Html.BeginForm("Purchase", "Sales", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmPurchaseVehicle" }))
-        {
-            @Html.ValidationSummary()
-            @Html.HiddenFor(x => x.Transaction.TransactionID)
-            <div class="row">
-                <div class="form-group col-25">
-                    <label>First Name</label>
-                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-                </div>
-                <div class="form-group col-25">
-                    <label>Last Name</label>
-                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-25">
-                    <label>Email</label>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                </div>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+{    
+    <h2>Administrator</h2>
+}
 
-            </div>
-            <div class="row">
-                <div class="form-group col-25">
-                    <label>Address Street 1</label>
-                    @Html.TextBoxFor(m => m.AddressStreet1, new { @class = "form-control" })
-                </div>
-                <div class="form-group col-25">
-                    <label>Address Street 2</label>
-                    @Html.TextBoxFor(m => m.AddressStreet2, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-25">
-                    <label>City</label>
-                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
-                </div>
-                <div class="form-group col-25">
-                    <label>State</label>
-                    @Html.DropDownListFor(m => m.Transaction.StateID, new SelectList(Model.States, "StateID", "StateAbbr", Model.StatesID), new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-25">
-                    <label>Zipcode</label>
-                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control", Value = "" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-25">
-                    <label>Purchase Price</label>
-                    @Html.TextBoxFor(m => m.PurchasePrice, new { @class = "form-control", Value = "" })
-                </div>
-                <div class="form-group col-25">
-                    <label>Purchase Type</label>
-                    @Html.DropDownListFor(m => m.Transaction.PurchaseTypeID, new SelectList(Model.PurchaseTypes, "PurchaseTypeID", "PurchaseTypeName", Model.PurchaseTypesID), new { @class = "form-control" })
-                </div>
 
-            </div>
-            <button class="btn btn-primary">Purchase</button>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-6">
+            <h2>Purchase Vehicle</h2>
+            @using (Html.BeginForm("Purchase", "Sales", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmPurchaseVehicle" }))
+            {
+                if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+                {
+                    @Html.HiddenFor(x => x.Role, new { @id = "admintag" })
+                }
+                else
+                {
+                    @Html.HiddenFor(x => x.Role, new { @id = "usertag" })
+                }
+                @Html.ValidationSummary()
+                @Html.HiddenFor(x => x.Transaction.TransactionID)
+                @Html.HiddenFor(x => x.CarID)
+                <div class="row">
+                    <div class="form-group col-25">
+                        <label>First Name</label>
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-25">
+                        <label>Last Name</label>
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-25">
+                        <label>Email</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
 
-        }
+                </div>
+                <div class="row">
+                    <div class="form-group col-25">
+                        <label>Address Street 1</label>
+                        @Html.TextBoxFor(m => m.AddressStreet1, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-25">
+                        <label>Address Street 2</label>
+                        @Html.TextBoxFor(m => m.AddressStreet2, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-25">
+                        <label>City</label>
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-25">
+                        <label>State</label>
+                        @Html.DropDownListFor(m => m.Transaction.StateID, new SelectList(Model.States, "StateID", "StateAbbr", Model.StatesID), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-25">
+                        <label>Zipcode</label>
+                        @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control", Value = "" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-25">
+                        <label>Purchase Price</label>
+                        @Html.TextBoxFor(m => m.PurchasePrice, new { @class = "form-control", Value = "" })
+                    </div>
+                    <div class="form-group col-25">
+                        <label>Purchase Type</label>
+                        @Html.DropDownListFor(m => m.Transaction.PurchaseTypeID, new SelectList(Model.PurchaseTypes, "PurchaseTypeID", "PurchaseTypeName", Model.PurchaseTypesID), new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <button class="btn btn-primary">Purchase</button>
+
+            }
+        </div>
     </div>
-</div>
 
+    <script>
+        $(function () {
+            $("#frmPurchaseVehicle").click(function () {
+                $("#admintag").val("Administrator");
+                $("#usertag").val("Sales");
+            });
+        });
+
+
+    </script>

@@ -13,7 +13,7 @@ namespace GuildCars.UI.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202007132136219_CreateInit"; }
+            get { return "202007182122433_CreateInit"; }
         }
         
         string IMigrationMetadata.Source

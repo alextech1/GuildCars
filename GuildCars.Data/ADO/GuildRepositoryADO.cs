@@ -49,7 +49,7 @@ namespace GuildCars.Data.ADO
                         row.DateAdded = dr["DateAdded"].ToString();
                         row.Photo = dr["Photo"].ToString();
 
-                        cars.Add(row);
+                        //cars.Add(row);
                     }
                 }
             }

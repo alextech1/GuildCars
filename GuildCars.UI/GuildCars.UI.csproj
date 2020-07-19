@@ -208,13 +208,14 @@
     <Compile Include="Controllers\InventoryAPIController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007132136219_CreateInit.cs" />
-    <Compile Include="Migrations\202007132136219_CreateInit.Designer.cs">
-      <DependentUpon>202007132136219_CreateInit.cs</DependentUpon>
+    <Compile Include="Migrations\202007182122433_CreateInit.cs" />
+    <Compile Include="Migrations\202007182122433_CreateInit.Designer.cs">
+      <DependentUpon>202007182122433_CreateInit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -224,8 +225,11 @@
     <Compile Include="Models\ContactViewModel.cs" />
     <Compile Include="Models\GroupedUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\MakesViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ModelsViewModel.cs" />
     <Compile Include="Models\PurchaseViewModel.cs" />
+    <Compile Include="Models\ReportsViewModel.cs" />
     <Compile Include="Models\SpecialsViewModel.cs" />
     <Compile Include="Models\UserEditViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -308,7 +312,6 @@
     <Content Include="Views\Inventory\Search.cshtml" />
     <Content Include="Views\Inventory\Details.cshtml" />
     <Content Include="Views\Inventory\New.cshtml" />
-    <Content Include="Views\Admin\New.cshtml" />
     <Content Include="Views\Admin\Vehicles.cshtml" />
     <Content Include="Views\Admin\Add.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
@@ -318,6 +321,10 @@
     <Content Include="Views\Admin\Specials.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\Makes.cshtml" />
+    <Content Include="Views\Admin\Models.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\Sales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -344,8 +351,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007132136219_CreateInit.resx">
-      <DependentUpon>202007132136219_CreateInit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007182122433_CreateInit.resx">
+      <DependentUpon>202007182122433_CreateInit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

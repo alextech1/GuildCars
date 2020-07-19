@@ -101,6 +101,8 @@ namespace GuildCars.UI.Migrations
                     {
                         MakeID = c.Int(nullable: false, identity: true),
                         MakeName = c.String(),
+                        UserID = c.String(),
+                        DateAdded = c.String(),
                         Car_CarID = c.Int(),
                     })
                 .PrimaryKey(t => t.MakeID)
@@ -114,6 +116,8 @@ namespace GuildCars.UI.Migrations
                         ModelID = c.Int(nullable: false, identity: true),
                         MakeID = c.Int(),
                         ModelName = c.String(),
+                        UserID = c.String(),
+                        DateAdded = c.String(),
                         Car_CarID = c.Int(),
                     })
                 .PrimaryKey(t => t.ModelID)
@@ -145,6 +149,18 @@ namespace GuildCars.UI.Migrations
                         Message = c.String(),
                     })
                 .PrimaryKey(t => t.ContactUsID);
+            
+            CreateTable(
+                "dbo.PurchaseType",
+                c => new
+                    {
+                        PurchaseTypeID = c.Int(nullable: false, identity: true),
+                        PurchaseTypeName = c.String(),
+                        Transaction_TransactionID = c.Int(),
+                    })
+                .PrimaryKey(t => t.PurchaseTypeID)
+                .ForeignKey("dbo.Transaction", t => t.Transaction_TransactionID)
+                .Index(t => t.Transaction_TransactionID);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -181,11 +197,26 @@ namespace GuildCars.UI.Migrations
                 .PrimaryKey(t => t.SpecialsID);
             
             CreateTable(
+                "dbo.State",
+                c => new
+                    {
+                        StateID = c.Int(nullable: false, identity: true),
+                        StateAbbr = c.String(),
+                        StateName = c.String(),
+                        Transaction_TransactionID = c.Int(),
+                    })
+                .PrimaryKey(t => t.StateID)
+                .ForeignKey("dbo.Transaction", t => t.Transaction_TransactionID)
+                .Index(t => t.Transaction_TransactionID);
+            
+            CreateTable(
                 "dbo.Transaction",
                 c => new
                     {
                         TransactionID = c.Int(nullable: false, identity: true),
                         CarID = c.Int(),
+                        UserID = c.String(),
+                        PurchaseDate = c.String(),
                         FirstName = c.String(),
                         LastName = c.String(),
                         Phone = c.String(),
@@ -206,31 +237,6 @@ namespace GuildCars.UI.Migrations
                 .Index(t => t.CarID)
                 .Index(t => t.StateID)
                 .Index(t => t.PurchaseTypeID);
-            
-            CreateTable(
-                "dbo.PurchaseType",
-                c => new
-                    {
-                        PurchaseTypeID = c.Int(nullable: false, identity: true),
-                        PurchaseTypeName = c.String(),
-                        Transaction_TransactionID = c.Int(),
-                    })
-                .PrimaryKey(t => t.PurchaseTypeID)
-                .ForeignKey("dbo.Transaction", t => t.Transaction_TransactionID)
-                .Index(t => t.Transaction_TransactionID);
-            
-            CreateTable(
-                "dbo.State",
-                c => new
-                    {
-                        StateID = c.Int(nullable: false, identity: true),
-                        StateAbbr = c.String(),
-                        StateName = c.String(),
-                        Transaction_TransactionID = c.Int(),
-                    })
-                .PrimaryKey(t => t.StateID)
-                .ForeignKey("dbo.Transaction", t => t.Transaction_TransactionID)
-                .Index(t => t.Transaction_TransactionID);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -311,14 +317,14 @@ namespace GuildCars.UI.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.State", new[] { "Transaction_TransactionID" });
-            DropIndex("dbo.PurchaseType", new[] { "Transaction_TransactionID" });
             DropIndex("dbo.Transaction", new[] { "PurchaseTypeID" });
             DropIndex("dbo.Transaction", new[] { "StateID" });
             DropIndex("dbo.Transaction", new[] { "CarID" });
+            DropIndex("dbo.State", new[] { "Transaction_TransactionID" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.PurchaseType", new[] { "Transaction_TransactionID" });
             DropIndex("dbo.Transmission", new[] { "Car_CarID" });
             DropIndex("dbo.Model", new[] { "Car_CarID" });
             DropIndex("dbo.Model", new[] { "MakeID" });
@@ -337,12 +343,12 @@ namespace GuildCars.UI.Migrations
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.State");
-            DropTable("dbo.PurchaseType");
             DropTable("dbo.Transaction");
+            DropTable("dbo.State");
             DropTable("dbo.Specials");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.PurchaseType");
             DropTable("dbo.ContactUs");
             DropTable("dbo.Transmission");
             DropTable("dbo.Model");

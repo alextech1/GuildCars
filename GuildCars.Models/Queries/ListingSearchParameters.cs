@@ -11,6 +11,8 @@ namespace GuildCars.Models.Queries
         public string Make { get; set; }
         public string Model { get; set; }
         public int? Year { get; set; }
+        public string MinYear { get; set; }
+        public string MaxYear { get; set; }
         public string Mileage { get; set; }
         public string OnSale { get; set; }
         public string MinPrice { get; set; }

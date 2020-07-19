@@ -3,6 +3,12 @@
     ViewBag.Title = "Admin";
 }
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+
 <div class="row">
     <div class="col-xs-12">
         <h2>Admin</h2>
@@ -48,45 +54,37 @@
 <div class="row">
     <div class="col-xs-12">
         <form id="searchForm" class="form-inline">
+
             <div class="form-group">
-                <label for="make">Make</label>
-                <input type="text" class="form-control" id="make">
+                <label for="make">Make</label><br />
+                <input type="text" class="form-control" id="make" name="make">
             </div>
             <div class="form-group">
-                <label for="model">Model</label>
-                <input type="text" class="form-control" id="model">
+                <label for="model">Model</label><br />
+                <input type="text" class="form-control" id="model" name="model">
             </div>
             <div class="form-group">
-                <label for="year">Year</label>
-                <input type="text" class="form-control" id="year">
+                <label for="minYear">Min Year</label><br />
+                <select class="form-control form-control-all" id="minYear" name="minYear" data-name="Year Range Min" title="Min year is required" aria-required="true">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="maxYear">Max Year</label><br />
+                <select class="form-control form-control-all" id="maxYear" name="maxYear" data-name="Year Range Max" title="Max year is required" aria-required="true">
+                </select>
             </div>
 
-            <label for="minYear">Min Year</label>
-            <select class="form-control" id="minYear" name="minYear">
-            </select>
-
-            <label for="maxYear">Max Year</label>
-            <select class="form-control" id="maxYear" name="maxYear">
-            </select>
-
-            <label for="maxPrice">Min Price</label>
-            <select class="form-control" id="maxPrice" name="maxPrice">
-                <option value="0">0</option>
-                <option value="2500">2500</option>
-                <option value="5000">5000</option>
-                <option value="10000">10000</option>
-            </select>
-
-            <label for="maxPrice">Max Price</label>
-            <select class="form-control" id="maxPrice" name="maxPrice">
-                <option value="0">0</option>
-                <option value="2500">2500</option>
-                <option value="5000">5000</option>
-                <option value="10000">10000</option>
-            </select>
-
+            <div>
+                <label for="amount">Price range:</label>
+                <input type="text" id="rangePrice" name="rangePrice" style="border:0; color:#f6931f; font-weight:bold; width:25%" readonly="readonly" /><br />
+                <input type="text" id="minPrice" hidden />
+                <input type="text" id="maxPrice" hidden />
+                <div id="sliderRange" style="width:250px; "></div><br />
+            </div>
 
             <button id="btnSearch" class="btn btn-primary">Search</button>
+
+
         </form>
     </div>
 </div>
@@ -96,84 +94,185 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        minYear();
-        maxYear();
-        $("#searchForm").submit(function (e) {
-            search();
-            return false;
-        });
-    });
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            priceRange();
+            minYear();
+            maxYear();
 
-    function minYear() {
-        var html = '';
-        for (var i = 1980; i <= new Date().getFullYear(); i++) {
-            html += '<option value="' + i + '">' + i + '</option>';
-        }
-        $('#minYear').html(html);
-    };
+            var $min = $('#minYear'),
+                $max = $('#maxYear');
+            console.log($min);
+            console.log($max)
 
-    function maxYear() {
-        var html = '';
-        for (var i = 1980; i <= new Date().getFullYear(); i++) {
-            html += '<option value="' + i + '">' + i + '</option>';
-        }
-        $('#maxYear').html(html);
-    };
-
-    function search() {
-        var params;
-
-        params = 'make=' + $('#make').val() + '&model=' + $('#model').val() + '&year=' +
-            $('#year').val();
-        console.log(params)
-
-        $.ajax({
-            type: 'GET',
-            url: '/api/cars/search?' + params,
-            success: function (results) {
-                console.log("success");
-                $('#searchResults').empty();
-
-                $.each(results, function (index, car) {
-                    var html = '<div class="row" style="border: 2px solid #0094ff;">' +
-                        '<div class="column one">' +
-                        `<h7 class="card-title text-primary"> ${car.Year} ${car.Make.MakeName} ${car.Model.ModelName}</h7><br />` +
-                        `<img src="/Images/${car.Photo}" style="height:50px; width:50px;" />` +
-                        '</div>' +
-                        '<div class="column two">' +
-                        '<h7 class="card-title text-primary">' + car.BodyStyle.BodyStyleName + '</h7><br />' +
-                        '<h7 class="card-title text-primary">' + car.Transmission.TransmissionType + '</h7><br />' +
-                        '<h7 class="card-title text-primary">' + car.ExteriorColor.Color + '</h7>' +
-                        '</div>' +
-                        '<div class="column three">' +
-                        '<h7 class="column card-title text-primary">' + car.InteriorColor.Color + '</h7><br />' +
-                        '<h7 class="card-title text-primary">' + car.Mileage + '</h7><br />' +
-                        '<h7 class="card-title text-primary">' + car.VIN + '</h7>' +
-                        '</div>' +
-                        '<div class="column four">' +
-                        '<h7 class="column card-title text-primary">' + car.SalePrice + '</h7><br />' +
-                        '<h7 class="card-title text-primary">' + car.MSRP + '</h7>' +
-                        '<br/>' +
-                        '<div class="col-sm-6">' +
-                        '<a class="btn btn-primary" href="/Admin/Edit/' + car.CarID + '">Edit</a>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>'
-
-
-                    $('#searchResults').append(html.toString());
-                });
-
-            },
-            error: function () {
-                alert('Error performing search, try again later!')
-            },
-            done: function () {
-                alert('Search AJAX complete')
+            function getNumber(num) {
+                var intNum = parseInt(num);
+                return !isNaN(intNum) ? intNum : 0;
             }
-        });
-    }
 
-</script>
+            function getMin() {
+                var number = getNumber($min.find('option:selected').val());
+                console.log(number);
+                return number;
+            }
+
+            function getMax() {
+                var number = getNumber($max.find('option:selected').val());
+                console.log(number);
+                return number;
+            }
+
+            function validateRequiredBoth() {
+                if (getMin() == "" && getMax() == "") {
+                    return true;
+                } else if (getMin() != "" && getMax() == "") {
+                    return true;
+                } else if (getMin() == "" && getMax() != "") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            $('#searchForm').validate({
+                debug: true,
+                onkeyup: false,
+                onfocusout: false,
+                onclick: false,
+                rules: {
+                    minrange: {
+                        required: function () {
+                            return validateRequiredBoth();
+                        },
+                        max: {
+                            param: function () {
+                                return getMax();
+                            },
+                            depends: function () {
+                                return getMax() > 0 && getMin() > getMax();
+                            }
+                        }
+                    },
+                    maxrange: {
+                        required: function () {
+                            return validateRequiredBoth();
+                        },
+                        min: {
+                            param: function () {
+                                return getMin();
+                            },
+                            depends: function () {
+                                return getMin() > getMax();
+                            }
+                        }
+                    }
+                },
+                submitHandler: function (formName, event) {
+                    console.log('search success');
+                }
+            });
+
+            $("#searchForm").submit(function (e) {
+                search();
+                return false;
+            });
+
+
+
+        });
+
+        function priceRange() {
+            $("#sliderRange").slider({
+                range: true,
+                min: 0,
+                max: 50000,
+                values: [0, 50000],
+                slide: function (event, ui) {
+                    $("#rangePrice").val("$" + ui.values[0] + " - " + "$" + ui.values[1]);
+                    $("#minPrice").val(ui.values[0])
+                    $("#maxPrice").val(ui.values[1])
+                }
+            });
+
+            $("#rangePrice").val("$" + $("#sliderRange").slider("values", 0) + " - " +
+                "$" + $("#sliderRange").slider("values", 1));
+            $("#minPrice").val($("#sliderRange").slider("values", 0));
+            $("#maxPrice").val($("#sliderRange").slider("values", 1));
+        };
+
+        function minYear() {
+            var html = '<option value="Any">Any</option>';
+            for (var i = 1980; i <= new Date().getFullYear(); i++) {
+                html += '<option value="' + i + '">' + i + '</option>';
+            }
+            $('#minYear').html(html);
+        };
+
+        function maxYear() {
+            var html = '<option value="Any">Any</option>';
+            for (var i = 1980; i <= new Date().getFullYear(); i++) {
+                html += '<option value="' + i + '">' + i + '</option>';
+            }
+            $('#maxYear').html(html);
+        };
+
+        function search() {
+            var params;
+
+            params = 'make=' + $('#make').val() + '&model=' + $('#model').val() + '&minYear=' +
+                $('#minYear').val() + '&maxYear=' + $('#maxYear').val() + '&minPrice=' + $('#minPrice').val() +
+                '&maxPrice=' + $('#maxPrice').val();
+            console.log(params)
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/cars/search?' + params,
+                success: function (results) {
+                    console.log("success");
+                    $('#searchResults').empty();
+
+                    $.each(results, function (index, car) {
+                        var html = '<div class="row" style="border: 2px solid #0094ff;">' +
+                            '<div class="column one">' +
+                            `<h7 class="card-title text-primary"> ${car.Year} ${car.Make.MakeName} ${car.Model.ModelName}</h7><br />` +
+                            `<img src="/Images/${car.Photo}" style="height:50px; width:50px;" />` +
+                            '</div>' +
+                            '<div class="column two">' +
+                            '<h7 class="card-title text-primary">' + car.BodyStyle.BodyStyleName + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.Transmission.TransmissionType + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.ExteriorColor.Color + '</h7>' +
+                            '</div>' +
+                            '<div class="column three">' +
+                            '<h7 class="column card-title text-primary">' + car.InteriorColor.Color + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.Mileage + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.VIN + '</h7>' +
+                            '</div>' +
+                            '<div class="column four">' +
+                            '<h7 class="column card-title text-primary">' + car.SalePrice + '</h7><br />' +
+                            '<h7 class="card-title text-primary">' + car.MSRP + '</h7>' +
+                            '<br/>' +
+                            '<div class="col-sm-6">' +
+                            '<a class="btn btn-primary" href="/Admin/Edit/' + car.CarID + '">Edit</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+
+
+                        $('#searchResults').append(html.toString());
+                    });
+
+                },
+                error: function () {
+                    alert('Error performing search, try again later!')
+                },
+                done: function () {
+                    alert('Search AJAX complete')
+                }
+            });
+
+
+        }
+    </script>
+}

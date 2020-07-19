@@ -1,0 +1,45 @@
+﻿@model List<GuildCars.UI.Models.MakesViewModel>
+@{
+    ViewBag.Title = "Makes";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h2>Makes</h2>
+
+<div>
+    <table>
+        <tr>
+            <th>Make</th>
+            <th>Date Added</th>
+            <th>User</th>
+        </tr>
+
+        @foreach (var make in Model)
+        {
+            <tr>
+                <td>@make.MakeName</td>
+                <td>@make.DateAdded</td>
+                <td>@make.User</td>
+
+            </tr>
+        }
+
+    </table>
+</div>

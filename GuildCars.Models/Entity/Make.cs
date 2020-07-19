@@ -14,5 +14,7 @@ namespace GuildCars.Models.Entity
         [Key]
         public int? MakeID { get; set; }
         public string MakeName { get; set; }
+        public string UserID { get; set; }
+        public string DateAdded { get; set; }
     }
 }

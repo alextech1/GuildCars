@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
 
@@ -17,20 +18,32 @@ namespace GuildCars.UI.Controllers
             CarViewModel model = new CarViewModel();
 
             var carRepo = GuildRepositoryFactory.GetRepository();
+            var makesRepo = MakeFactory.GetRepository();
+            var modelRepo = ModelFactory.GetRepository();
+            var typesRepo = ConditionFactory.GetRepository();
+            var bodyStylesRepo = BodyStyleFactory.GetRepository();
+            var transmissionsRepo = TransmissionFactory.GetRepository();
+            var extColorsRepo = ExteriorColorFactory.GetRepository();
+            var intColorsRepo = InteriorColorFactory.GetRepository();
 
-            model.Cars = carRepo.GetAllCars();
-
-            List<Car> carList = model.Cars;
+            List<Car> carList = carRepo.GetAllCars();            
 
             List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
             {
-                MakeName = x.Make.MakeName,
-                ModelName = x.Model.ModelName,
+                CarID = x.CarID,
+                MakeID = x.MakeID,
+                MakeName = makesRepo.GetMakeById(x.MakeID).MakeName,
+                ModelID = x.ModelID,
+                ModelName = modelRepo.GetModelById(x.ModelID).ModelName,
                 Year = x.Year,
                 MSRP = x.MSRP,
                 SalePrice = x.SalePrice,
                 ImageFileName = x.Photo
             }).ToList();
+
+            /*foreach (var car in carList)
+            {
+            }*/
 
             return View(carVMList);
         }

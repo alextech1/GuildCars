@@ -12,12 +12,7 @@ namespace GuildCars.Data.Mockup
     {
         private static List<Transaction> transactions = new List<Transaction>
         {
-            new Transaction { TransactionID = 1, AddressStreet1 = "101 n hill", AddressStreet2 = "",
-            Car = new Car { CarID = 1 }, City = "Dallas", Email = "boston@gmail.com", FirstName = "Albert",
-            LastName = "Stone", Phone = "214-223-4455", PurchasePrice = 12300.00m, 
-            PurchaseType = new PurchaseType { PurchaseTypeID = 1 },
-            Role = "Sales", State = new State { StateID = 1}, ZipCode = 76108
-            }
+
         };
 
         public Transaction GetTransactionById(int? id)

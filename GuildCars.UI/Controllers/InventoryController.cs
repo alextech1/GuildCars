@@ -27,7 +27,7 @@ namespace GuildCars.UI.Controllers
 
             List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
             {
-                CarVMID = x.CarID,
+                CarID = x.CarID,
                 Year = x.Year,
                 MakeName = x.Make.MakeName,
                 ModelName = x.Model.ModelName,
@@ -59,7 +59,7 @@ namespace GuildCars.UI.Controllers
 
             List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
             {
-                CarVMID = x.CarID,
+                CarID = x.CarID,
                 Year = x.Year,
                 MakeName = x.Make.MakeName,
                 ModelName = x.Model.ModelName,
@@ -90,7 +90,7 @@ namespace GuildCars.UI.Controllers
 
             List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
             {
-                CarVMID = x.CarID,
+                CarID = x.CarID,
                 Year = x.Year,
                 MakeName = x.Make.MakeName,
                 ModelName = x.Model.ModelName,
@@ -116,7 +116,7 @@ namespace GuildCars.UI.Controllers
 
             var carvm = carViewModel.IGuildRepository.GetCarById(id);
 
-            carViewModel.CarVMID = carvm.CarID;
+            carViewModel.CarID = carvm.CarID;
             carViewModel.Year = carvm.Year;
             carViewModel.MakeName = carvm.Make.MakeName;
             carViewModel.ModelName = carvm.Model.ModelName;

@@ -1,0 +1,45 @@
+﻿@model List<GuildCars.UI.Models.ReportsViewModel>
+@{
+    ViewBag.Title = "Sales";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h2>Sales Report</h2>
+
+<div>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Total Sales</th>
+            <th>Total Vehicles</th>
+        </tr>
+
+        @foreach (var report in Model)
+        {
+            <tr>
+                <td>@report.User</td>
+                <td>@report.TotalSales</td>
+                <td>@report.TotalVehicles</td>
+
+            </tr>
+        }
+
+    </table>
+</div>

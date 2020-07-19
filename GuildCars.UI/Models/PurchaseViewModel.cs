@@ -9,6 +9,8 @@ namespace GuildCars.UI.Models
     public class PurchaseViewModel
     {
         public Transaction Transaction { get; set; }
+        public int? CarID { get; set; }
+        public string PurchaseDate { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
@@ -16,10 +18,13 @@ namespace GuildCars.UI.Models
         public string AddressStreet1 { get; set; }
         public string AddressStreet2 { get; set; }
         public string City { get; set; }
+        public string Role { get; set; }
         public IEnumerable<State> States { get; set; }
         public int? StatesID { get; set; }
-        public int? ZipCode { get; set; }
-        public decimal? PurchasePrice { get; set; }
+        public int StateID { get; set; }
+        public int ZipCode { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public int PurchaseTypeID { get; set; }
         public IEnumerable<PurchaseType> PurchaseTypes { get; set; }
         public int? PurchaseTypesID { get; set; }
     }

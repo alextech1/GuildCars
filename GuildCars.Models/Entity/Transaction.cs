@@ -15,7 +15,9 @@ namespace GuildCars.Models.Entity
         public int? TransactionID { get; set; }
         public int? CarID { get; set; }
         [ForeignKey("CarID")]
-        public virtual Car Car { get; set; }               
+        public virtual Car Car { get; set; }
+        public string UserID { get; set; }
+        public string PurchaseDate { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
