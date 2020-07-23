@@ -14,105 +14,65 @@ namespace GuildCars.Data.Mockup
     {
         private static List<Car> cars = new List<Car>
         {
-            new Car { CarID = 1, OnSale = true, IsInStock = true, MakeID = 1,
-                ModelID = 1,
-                ConditionID = 2, Year = 2010,
-                BodyStyleID = 1,
-                TransmissionID = 2,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 1, OnSale = true, IsInStock = true, MakeID = 1, ModelID = 1, ConditionID = 2,
+                Year = 2010, BodyStyleID = 1, TransmissionID = 2, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "102,000", VIN = "1ASDFOJ29J4FO4THG", SalePrice = 9000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "hondacivic.png"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "hondacivic.png"
             },
-            new Car { CarID = 2, OnSale = true, IsInStock = true, MakeID = 1,
-                ModelID = 6,
-                ConditionID = 2, Year = 2012,
-                BodyStyleID = 1,
-                TransmissionID = 1,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 2, OnSale = true, IsInStock = true, MakeID = 1, ModelID = 6, ConditionID = 2,
+                Year = 2012, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "102,000", VIN = "1ASDFOJ29J4FO4TH9", SalePrice = 10000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "hondaaccord.jpg"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "hondaaccord.jpg"
             },
-            new Car { CarID = 3, OnSale = false, IsInStock = true, MakeID = 2,
-                ModelID = 2,
-                ConditionID = 2, Year = 2009,
-                BodyStyleID = 1,
-                TransmissionID = 1,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 3, OnSale = false, IsInStock = true, MakeID = 2, ModelID = 2, ConditionID = 2,
+                Year = 2009, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "102,000", VIN = "1ASDFOJ29J4FO4TH8", SalePrice = 8000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "toyotacorolla.png"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "toyotacorolla.png"
             },
-            new Car { CarID = 4, OnSale = false, IsInStock = true, MakeID = 2,
-                ModelID = 2,
-                ConditionID = 2, Year = 2010,
-                BodyStyleID = 1,
-                TransmissionID = 1,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 4, OnSale = false, IsInStock = true, MakeID = 2, ModelID = 2, ConditionID = 2,
+                Year = 2010, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "102,000", VIN = "1ASDFOJ29J4FO4TH7", SalePrice = 12000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "toyotacorolla.png"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "toyotacorolla.png"
             },
-            new Car { CarID = 5, OnSale = true, IsInStock = true, MakeID = 1 ,
-                ModelID = 1,
-                ConditionID = 2, Year = 2015,
-                BodyStyleID = 1,
-                TransmissionID = 1,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 5, OnSale = true, IsInStock = true, MakeID = 1, ModelID = 1, ConditionID = 2,
+                Year = 2015, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "102,000", VIN = "1ASDFOJ29J4FO4TH6", SalePrice = 11000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "hondacivic.png"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "hondacivic.png"
             },
-            new Car { CarID = 6,  OnSale = true, IsInStock = true, MakeID = 1,
-                ModelID = 6,
-                ConditionID = 1, Year = 2009,
-                BodyStyleID = 1,
-                TransmissionID = 1,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 6,  OnSale = true, IsInStock = true, MakeID = 1, ModelID = 6, ConditionID = 1,
+                Year = 2009, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "New", VIN = "1ASDFOJ29J4FO4099", SalePrice = 10000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "hondaaccord.jpg"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "hondaaccord.jpg"
             },
-            new Car { CarID = 7, OnSale = true, IsInStock = true, MakeID = 1,
-                ModelID = 6,
-                ConditionID = 1, Year = 2010,
-                BodyStyleID = 1,
-                TransmissionID = 1,
-                ExteriorColorID = 2,
-                InteriorColorID = 1,
+            new Car { CarID = 7, OnSale = true, IsInStock = true, MakeID = 1,ModelID = 6,ConditionID = 1,
+                Year = 2010, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 2, InteriorColorID = 1,
                 Mileage = "New", VIN = "1ASDFOJ29J4FO43ER", SalePrice = 12000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "hondaaccord.jpg"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "hondaaccord.jpg"
             },
-            new Car { CarID = 8, OnSale = true, IsInStock = true, MakeID = 1,
-                ModelID = 1,
-                ConditionID = 1, Year = 2015,
-                BodyStyleID = 1 ,
-                TransmissionID = 1,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 8, OnSale = true, IsInStock = true, MakeID = 1, ModelID = 1, ConditionID = 1,
+                Year = 2015, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "New", VIN = "1ASDFOJ29J4FOD493", SalePrice = 9000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "hondacivic.png"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "hondacivic.png"
             },
-            new Car { CarID = 9, OnSale = true, IsInStock = true, MakeID = 1,
-                ModelID = 1,
-                ConditionID = 1, Year = 2015,
-                BodyStyleID = 1,
-                TransmissionID = 1,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 9, OnSale = true, IsInStock = true, MakeID = 1, ModelID = 1, ConditionID = 1,
+                Year = 2015, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "New", VIN = "1ASDFOJ29J4FORE9A", SalePrice = 13000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "hondacivic.png"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "hondacivic.png"
             },
-            new Car { CarID = 10, OnSale = true, IsInStock = true, MakeID = 2,
-                ModelID = 7,
-                ConditionID = 1, Year = 2015,
-                BodyStyleID = 1,
-                TransmissionID = 1,
-                ExteriorColorID = 1,
-                InteriorColorID = 2,
+            new Car { CarID = 10, OnSale = true, IsInStock = true, MakeID = 2, ModelID = 7, ConditionID = 1,
+                Year = 2015, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "New", VIN = "1ASDFOJ29J93FA231", SalePrice = 12000.00M, MSRP = 12000.00M,
-                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019", Photo = "toyotarav4.png"
+                Description = "The best car in town, come check out this great deal today", DateAdded = "01/04/2019",
+                Photo = "toyotarav4.png"
             }
 
         };
@@ -148,7 +108,7 @@ namespace GuildCars.Data.Mockup
 
             searchList = cars;
 
-            if (!string.IsNullOrEmpty(parameters.Make)) //FYI: we do not have the make null
+            if (!string.IsNullOrEmpty(parameters.Make)) //FYI: we do not have a make null
             {
                 if (parameters.Mileage == "used")
                 {
@@ -168,7 +128,7 @@ namespace GuildCars.Data.Mockup
                 }
             }
 
-            if (!string.IsNullOrEmpty(parameters.Model)) //FYI: do not call your model null
+            if (!string.IsNullOrEmpty(parameters.Model)) //FYI: we do not have a model null
             {
                 if (parameters.Mileage == "used")
                 {
@@ -183,9 +143,9 @@ namespace GuildCars.Data.Mockup
                     searchList = cars.Where(x => x.OnSale == true && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Make.ToLower())).ToList();
                 }
                 else
-                {                    
-                    searchList = cars.Where(x => modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();                    
-                }                
+                {
+                    searchList = cars.Where(x => modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
+                }
             }
 
             searchList2 = searchList;

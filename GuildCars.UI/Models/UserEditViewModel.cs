@@ -14,8 +14,8 @@ namespace GuildCars.UI.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public Role Role { get; set; }
-        public IEnumerable<Role> Roles { get; set; }
+        public GuildRole Role { get; set; }
+        public IEnumerable<GuildRole> Roles { get; set; }
         public int? RolesID { get; set; }
         [Required]
         public string Password { get; set; }

@@ -11,5 +11,6 @@ namespace GuildCars.Data.Interfaces
     {
         List<ExteriorColor> GetExteriorColors();
         ExteriorColor GetExteriorColorById(int? id);
+        void InsertExteriorColor(ExteriorColor exteriorColor);
     }
 }

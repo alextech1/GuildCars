@@ -11,5 +11,6 @@ namespace GuildCars.Data.Interfaces
     {
         List<Make> GetMakes();
         Make GetMakeById(int? id);
+        void InsertMake(Make make);
     }
 }

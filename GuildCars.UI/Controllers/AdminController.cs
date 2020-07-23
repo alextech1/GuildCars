@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
+using GuildCars.Data;
 
 namespace GuildCars.UI.Controllers
 {
@@ -86,32 +87,6 @@ namespace GuildCars.UI.Controllers
 
         public ActionResult Vehicles()
         {
-            CarViewModel model = new CarViewModel();
-
-            model.IGuildRepository = GuildRepositoryFactory.GetRepository();
-
-
-
-            /*model.Cars = model.IGuildRepository.GetAllCars();
-
-            List<Car> carList = model.Cars;
-
-            List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
-            {
-                MakeName = x.Make.MakeName,
-                ModelName = x.Model.ModelName,
-                BodyStyleName = x.BodyStyle.BodyStyleName,
-                TransmissionType = x.Transmission.TransmissionType,
-                ExteriorColorName = x.ExteriorColor.Color,
-                InteriorColorName = x.InteriorColor.Color,
-                Year = x.Year,
-                Mileage = x.Mileage,
-                VIN = x.VIN,
-                MSRP = x.MSRP,
-                SalePrice = x.SalePrice,
-                Description = x.Description
-            }).ToList();*/
-
             return View();
         }
 
@@ -215,6 +190,7 @@ namespace GuildCars.UI.Controllers
                     model.Car.Transmission = new Transmission();
                     model.Car.Transmission.TransmissionID = model.Car.TransmissionID;
                     model.Car.Transmission.TransmissionType = transmissionsRepo.GetTransmissionById(model.Car.TransmissionID).TransmissionType;
+                    
 
                     if (model.ImageUpload != null && model.ImageUpload.ContentLength > 0)
                     {
@@ -225,26 +201,39 @@ namespace GuildCars.UI.Controllers
 
                         var filePath = Path.Combine(savepath, fileName + extension);
 
-                        int counter = 1;
+                        /*int counter = 1;
                         while (System.IO.File.Exists(filePath))
                         {
                             filePath = Path.Combine(savepath, fileName + counter.ToString() + extension);
                             counter++;
-                        }
+                        }*/
 
                         model.ImageUpload.SaveAs(filePath);
                         model.Car.Photo = Path.GetFileName(filePath);
                     }
 
                     carRepo.InsertCar(model.Car);
+                    bodyStylesRepo.InsertBodyStyle(model.Car.BodyStyle);
+                    typesRepo.InsertCondition(model.Car.Condition);
+                    extColorsRepo.InsertExteriorColor(model.Car.ExteriorColor);
+                    intColorsRepo.InsertInteriorColor(model.Car.InteriorColor);
+                    makesRepo.InsertMake(model.Car.Make);
+                    modelRepo.InsertModel(model.Car.Model);
+                    transmissionsRepo.InsertTransmission(model.Car.Transmission);
 
-                    _context.Cars.Add(model.Car);
+                    if (Settings.GetRepositoryType() == "EF")
+                    {
+                        _context.Cars.Add(model.Car);
 
-                    if (model.Car == null)
-                        model.Car = new Car();
+                        if (model.Car == null)
+                            model.Car = new Car();
 
-                    _context.SaveChanges();
+                        _context.SaveChanges();
+                    }
 
+                    
+
+                    
                     return RedirectToAction("Vehicles");
                 }
                 catch (Exception ex)
@@ -409,36 +398,134 @@ namespace GuildCars.UI.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult Makes()
         {
             var allUsers = _context.Users.ToList();
             var allMakes = _context.Makes.ToList();
 
-            var makesVM = allMakes.Select(x => new MakesViewModel
+            var model = new MakesViewModel();
+
+            var makesRepo = MakeFactory.GetRepository();
+
+            model.Makes = makesRepo.GetMakes();
+            model.MakesVM = new List<MakesViewModel>();
+
+            model.MakesVM = allMakes.Select(x => new MakesViewModel
             {
                 MakeName = x.MakeName,
                 DateAdded = x.DateAdded,
                 User = allUsers.Where(y => y.Id == x.UserID).Select(y => y.Email).FirstOrDefault()
             }).ToList();
 
-            return View(makesVM);
+            return View(model);
         }
 
+        [Authorize]
+        [HttpPost]
+        public ActionResult Makes(MakesViewModel makes)
+        {
+            if (ModelState.IsValid)
+            {
+                var makesRepo = MakeFactory.GetRepository();
+
+                makes.Make.UserID = AuthorizeUtilities.GetUserId(this);
+                makes.Make.DateAdded = DateTime.Now.ToString("MM/dd/yyyy");
+                makesRepo.InsertMake(makes.Make);
+
+                var allUsers = _context.Users.ToList();
+                var allMakes = _context.Makes.ToList();
+
+                makes.Makes = makesRepo.GetMakes();
+                makes.MakesVM = new List<MakesViewModel>();
+
+                makes.MakesVM = allMakes.Select(x => new MakesViewModel
+                {
+                    MakeName = x.MakeName,
+                    DateAdded = x.DateAdded,
+                    User = allUsers.Where(y => y.Id == x.UserID).Select(y => y.Email).FirstOrDefault()
+                }).ToList();
+
+                return View(makes);
+            }
+            else
+            {
+                return View(makes);
+            }
+        }
+
+        [Authorize]
         public ActionResult Models()
         {
             var allUsers = _context.Users.ToList();
             var allMakes = _context.Makes.ToList();
             var allModels = _context.Models.ToList();
 
-            var makesVM = allModels.Select(x => new ModelsViewModel
+            var model = new ModelsViewModel();
+
+            var modelsRepo = ModelFactory.GetRepository();
+            var makesRepo = MakeFactory.GetRepository();
+
+            //model.Models = modelsRepo.GetModels();
+            //model.Makes = new List<Make>();
+            //model.ModelsVM = new List<ModelsViewModel>();
+
+            List<ModelsViewModel> modelList = allModels.Select(x => new ModelsViewModel
             {
                 MakeName = allMakes.Where(y => y.MakeID == x.MakeID).Select(y => y.MakeName).FirstOrDefault(),
+                //Makes = makesRepo.GetMakes(),
                 ModelName = x.ModelName,
                 DateAdded = x.DateAdded,
                 User = allUsers.Where(y => y.Id == x.UserID).Select(y => y.Email).FirstOrDefault()
             }).ToList();
 
-            return View(makesVM);
+            ModelsViewModel viewModel = new ModelsViewModel
+            {
+                Makes = makesRepo.GetMakes(),
+                ModelsVM = modelList
+            };
+
+            return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Models(ModelsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var modelsRepo = ModelFactory.GetRepository();
+                var makesRepo = MakeFactory.GetRepository();
+
+                model.Model = new Model();
+                model.Model.Make.MakeID = model.Make.MakeID;
+                model.Model.Make.MakeName = makesRepo.GetMakeById(model.Make.MakeID).MakeName;
+                model.Model.UserID = AuthorizeUtilities.GetUserId(this);
+                model.Model.DateAdded = DateTime.Now.ToString("MM/dd/yyyy");
+                modelsRepo.InsertModel(model.Model);
+
+                var allUsers = _context.Users.ToList();
+                var allMakes = _context.Makes.ToList();
+                var allModels = _context.Models.ToList();
+
+                model.Models = modelsRepo.GetModels();
+                model.ModelsVM = new List<ModelsViewModel>();
+
+                model.ModelsVM = allModels.Select(x => new ModelsViewModel
+                {
+                    MakeName = allMakes.Where(y => y.MakeID == x.MakeID).Select(y => y.MakeName).FirstOrDefault(),
+                    ModelName = x.ModelName,
+                    DateAdded = x.DateAdded,
+                    User = allUsers.Where(y => y.Id == x.UserID).Select(y => y.Email).FirstOrDefault()
+                }).ToList();
+
+                return View(model);
+            }
+            else
+            {
+                return View(model);
+            }
+
         }
 
         public ActionResult EditUser(string id)

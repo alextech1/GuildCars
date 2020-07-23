@@ -10,18 +10,18 @@ namespace GuildCars.Data.Mockup
 {
     public class RoleRepositoryMock : IRoleRepository
     {
-        private static List<Role> roles = new List<Role>()
+        private static List<GuildRole> roles = new List<GuildRole>()
         {
-            new Role { RoleID = 1, RoleName = "Sales"},
-            new Role { RoleID = 2, RoleName = "Admin"}
+            new GuildRole { RoleID = 1, RoleName = "Sales"},
+            new GuildRole { RoleID = 2, RoleName = "Admin"}
         };
 
-        public Role GetRoleById(int? id)
+        public GuildRole GetRoleById(int? id)
         {
             return roles.FirstOrDefault(x => x.RoleID == id);
         }
 
-        public List<Role> GetRoles()
+        public List<GuildRole> GetRoles()
         {
             return roles;
         }

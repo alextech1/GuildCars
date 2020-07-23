@@ -47,11 +47,6 @@
     }
 </style>
 
-@if (Request.IsAuthenticated && User.IsInRole("Administrator"))
-{
-    <h2>Administrator</h2>
-}
-
 <div class="row">
     <div class="col-xs-12">
         <h2>Search</h2>
@@ -232,7 +227,7 @@
 
         params = 'make=' + $('#make').val() + '&model=' + $('#model').val() + '&minYear=' +
             $('#minYear').val() + '&maxYear=' + $('#maxYear').val() + '&minPrice=' + $('#minPrice').val() +
-            '&maxPrice=' + $('#maxPrice').val();
+            '&maxPrice=' + $('#maxPrice').val() + '&mileage=' + $('#mileage').val();
         console.log(params)
 
         $.ajax({
@@ -243,7 +238,7 @@
                 $('#searchResults').empty();
 
                 $.each(results, function (index, car) {
-                    var html = '<div class="row" style="border: 2px solid #0094ff;">' +
+                    var html = '<br /><div class="row" style="border: 2px solid #0094ff;">' +
                         '<div class="column one">' +
                         `<h7 class="card-title text-primary"> ${car.Year} ${car.Make.MakeName} ${car.Model.ModelName}</h7><br />` +
                         `<img src="/Images/${car.Photo}" style="height:50px; width:50px;" />` +

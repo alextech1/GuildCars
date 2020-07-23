@@ -11,5 +11,6 @@ namespace GuildCars.Data.Interfaces
     {
         List<Condition> GetConditions();
         Condition GetConditionById(int? id);
+        void InsertCondition(Condition condition);
     }
 }

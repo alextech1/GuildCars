@@ -45,6 +45,11 @@
         display: table;
         clear: both;
     }
+
+    .highlighted {
+        background-color: Yellow;
+    }
+
 </style>
 
 @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
@@ -233,11 +238,16 @@
             $('#minYear').val() + '&maxYear=' + $('#maxYear').val() + '&minPrice=' + $('#minPrice').val() +
             '&maxPrice=' + $('#maxPrice').val() + '&onsale=' + $('#onsale').val();
         console.log(params)
+        var container = $('#intagsname');
+        var makeSearch = $('#make').val();
+        var replacement = '<span class="highlight">' + makeSearch + '</span>';
 
         $.ajax({
             type: 'GET',
             url: '/api/cars/search?' + params,
-            success: function (results) {
+            cache: false,
+            success: function (results) {               
+
                 console.log("success");
                 $('#searchResults').empty();
 
@@ -267,6 +277,11 @@
                         '</div>' +
                         '</div>'
 
+                    //var text = $('#searchResults').html();
+                    //text = text.replace(makeSearch, '<span style="background-color:Yellow" >' + makeSearch + '</span>');
+                    //$('#searchResults').html(text);
+
+                    //$('#searchResults').html($('#searchResults').text().replace(makeSearch, '<span style="background-color:yellow">' + makeSearch + '</span>'));
 
                     $('#searchResults').append(html.toString());
                 });

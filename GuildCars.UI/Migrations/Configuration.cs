@@ -1,6 +1,7 @@
 namespace GuildCars.UI.Migrations
 {
     using GuildCars.Data.Factories;
+    using GuildCars.Data.Mockup;
     using GuildCars.Models.Entity;
     using GuildCars.UI.Models;
     using Microsoft.Ajax.Utilities;
@@ -239,6 +240,22 @@ namespace GuildCars.UI.Migrations
                 }
 
                 context.Cars.AddRange(carsToAdd);
+
+                base.Seed(context);
+            }
+
+            if (context.GuildRoles.Count() == 0)
+            {
+                var rolesRepo = RoleFactory.GetRepository();
+
+                IList<GuildRole> rolesToAdd = new List<GuildRole>();
+
+                foreach (var role in rolesRepo.GetRoles())
+                {
+                    rolesToAdd.Add(role);
+                }
+
+                context.GuildRoles.AddRange(rolesToAdd);
 
                 base.Seed(context);
             }

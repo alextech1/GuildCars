@@ -16,66 +16,12 @@ namespace GuildCars.UI.Controllers
     {
         public ActionResult Used()
         {
-            CarViewModel carViewModel = new CarViewModel();
-            //ApplicationUser appUser = new ApplicationUser();
-
-            carViewModel.IGuildRepository = GuildRepositoryFactory.GetRepository();
-
-            carViewModel.Cars = carViewModel.IGuildRepository.GetAllCars();
-
-            var carList = carViewModel.Cars;
-
-            List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
-            {
-                CarID = x.CarID,
-                Year = x.Year,
-                MakeName = x.Make.MakeName,
-                ModelName = x.Model.ModelName,
-                BodyStyleName = x.BodyStyle.BodyStyleName,
-                TransmissionType = x.Transmission.TransmissionType,
-                ExteriorColorName = x.ExteriorColor.Color,
-                InteriorColorName = x.InteriorColor.Color,
-                Mileage = x.Mileage,
-                VIN = x.VIN,
-                SalePrice = x.SalePrice,
-                MSRP = x.MSRP,
-                ImageFileName = x.Photo,
-                //Role = appUser.Role
-            }).ToList();
-
-            return View(carVMList);
+            return View();
         }
 
         public ActionResult New()
         {
-            CarViewModel carViewModel = new CarViewModel();
-            //ApplicationUser appUser = new ApplicationUser();
-
-            carViewModel.IGuildRepository = GuildRepositoryFactory.GetRepository();
-
-            carViewModel.Cars = carViewModel.IGuildRepository.GetAllCars();
-
-            var carList = carViewModel.Cars;
-
-            List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
-            {
-                CarID = x.CarID,
-                Year = x.Year,
-                MakeName = x.Make.MakeName,
-                ModelName = x.Model.ModelName,
-                BodyStyleName = x.BodyStyle.BodyStyleName,
-                TransmissionType = x.Transmission.TransmissionType,
-                ExteriorColorName = x.ExteriorColor.Color,
-                InteriorColorName = x.InteriorColor.Color,
-                Mileage = x.Mileage,
-                VIN = x.VIN,
-                SalePrice = x.SalePrice,
-                MSRP = x.MSRP,
-                ImageFileName = x.Photo,
-                //Role = appUser.Role
-            }).ToList();
-
-            return View(carVMList);
+            return View();
         }
 
         public ActionResult Search()

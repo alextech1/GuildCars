@@ -11,5 +11,6 @@ namespace GuildCars.Data.Interfaces
     {
         List<Model> GetModels();
         Model GetModelById(int? id);
+        void InsertModel(Model model);
     }
 }

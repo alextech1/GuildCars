@@ -55,6 +55,7 @@ namespace GuildCars.UI.Models
         public DbSet<InteriorColor> InteriorColors { get; set; }
         public DbSet<Make> Makes { get; set; }
         public DbSet<Model> Models { get; set; }
+        public DbSet<GuildRole> GuildRoles { get; set; }
         public DbSet<Specials> Specials { get; set; }
         public DbSet<Transmission> Transmissions { get; set; }
 

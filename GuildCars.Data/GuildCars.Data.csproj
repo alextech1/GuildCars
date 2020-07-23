@@ -37,8 +37,19 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ADO\BodyStyleRepositoryADO.cs" />
+    <Compile Include="ADO\ConditionRepositoryADO.cs" />
+    <Compile Include="ADO\ExteriorColorRepositoryADO.cs" />
     <Compile Include="ADO\GuildRepositoryADO.cs" />
-    <Compile Include="EF\GuildRepositoryEF.cs" />
+    <Compile Include="ADO\InteriorColorRepositoryADO.cs" />
+    <Compile Include="ADO\MakeRepositoryADO.cs" />
+    <Compile Include="ADO\ModelRepositoryADO.cs" />
+    <Compile Include="ADO\PurchaseTypeRepositoryADO.cs" />
+    <Compile Include="ADO\RoleRepositoryADO.cs" />
+    <Compile Include="ADO\SpecialsRepositoryADO.cs" />
+    <Compile Include="ADO\StateRepositoryADO.cs" />
+    <Compile Include="ADO\TransactionRepositoryADO.cs" />
+    <Compile Include="ADO\TransmissionRepositoryADO.cs" />
     <Compile Include="Factories\BodyStyleFactory.cs" />
     <Compile Include="Factories\ConditionFactory.cs" />
     <Compile Include="Factories\ExteriorColorFactory.cs" />
@@ -80,7 +91,9 @@
     <Compile Include="Mockup\TransmissionRepositoryMock.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="EF\" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

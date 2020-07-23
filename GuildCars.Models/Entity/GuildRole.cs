@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace GuildCars.Models.Entity
 {
-    [Table("Role")]
-    public class Role
+    [Table("GuildRole")]
+    public class GuildRole
     {
         [Key]
         public int RoleID { get; set; }

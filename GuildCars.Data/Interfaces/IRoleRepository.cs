@@ -9,7 +9,7 @@ namespace GuildCars.Data.Interfaces
 {
     public interface IRoleRepository
     {
-        List<Role> GetRoles();
-        Role GetRoleById(int? id);
+        List<GuildRole> GetRoles();
+        GuildRole GetRoleById(int? id);
     }
 }

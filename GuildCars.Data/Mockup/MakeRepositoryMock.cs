@@ -28,5 +28,12 @@ namespace GuildCars.Data.Mockup
         {
             return makes;
         }
+
+        public void InsertMake(Make make)
+        {
+            var newMakeID = makes.Max(x => x.MakeID) + 1;
+            make.MakeID = newMakeID;
+            makes.Add(make);
+        }
     }
 }

@@ -151,6 +151,15 @@ namespace GuildCars.UI.Migrations
                 .PrimaryKey(t => t.ContactUsID);
             
             CreateTable(
+                "dbo.GuildRole",
+                c => new
+                    {
+                        RoleID = c.Int(nullable: false, identity: true),
+                        RoleName = c.String(),
+                    })
+                .PrimaryKey(t => t.RoleID);
+            
+            CreateTable(
                 "dbo.PurchaseType",
                 c => new
                     {
@@ -349,6 +358,7 @@ namespace GuildCars.UI.Migrations
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.PurchaseType");
+            DropTable("dbo.GuildRole");
             DropTable("dbo.ContactUs");
             DropTable("dbo.Transmission");
             DropTable("dbo.Model");

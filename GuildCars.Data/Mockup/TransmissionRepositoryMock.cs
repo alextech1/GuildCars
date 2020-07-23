@@ -25,5 +25,10 @@ namespace GuildCars.Data.Mockup
         {
             return transmissions;
         }
+
+        public void InsertTransmission(Transmission transmission)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

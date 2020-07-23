@@ -29,5 +29,10 @@ namespace GuildCars.Data.Mockup
         {
             return interiorColors;
         }
+
+        public void InsertInteriorColor(InteriorColor interiorColor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

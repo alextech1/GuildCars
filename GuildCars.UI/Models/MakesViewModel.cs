@@ -10,6 +10,7 @@ namespace GuildCars.UI.Models
     {
         public Make Make { get; set; }
         public List<Make> Makes { get; set; }
+        public List<MakesViewModel> MakesVM { get; set; }
         public string MakeName { get; set; }
         public string DateAdded { get; set; }
         public string User { get; set; }

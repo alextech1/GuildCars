@@ -12,6 +12,7 @@ namespace GuildCars.Data.Interfaces
         List<Specials> GetSpecials();
         Specials GetSpecialsById(int? id);
         void AddSpecial(Specials specials);
+        void Update(Specials specials);
         void RemoveSpecial(int? id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using GuildCars.Data.Interfaces;
+﻿using GuildCars.Data.ADO;
+using GuildCars.Data.Interfaces;
 using GuildCars.Data.Mockup;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,8 @@ namespace GuildCars.Data.Factories
             {
                 case "Mockup":
                     return new TransactionRepositoryMock();
-                //case "ADO":
-                //    return new GuildRepositoryADO();
+                case "ADO":
+                    return new TransactionRepositoryADO();
                 //case "EF":
                 //    return new GuildRepositoryEF();
                 default:

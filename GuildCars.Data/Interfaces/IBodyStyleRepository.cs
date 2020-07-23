@@ -11,6 +11,7 @@ namespace GuildCars.Data.Interfaces
     {
         List<BodyStyle> GetBodyStyles();
         BodyStyle GetBodyStyleById(int? id);
+        void InsertBodyStyle(BodyStyle bodyStyle);
         
     }
 }

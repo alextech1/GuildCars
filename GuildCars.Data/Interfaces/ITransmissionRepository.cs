@@ -11,5 +11,6 @@ namespace GuildCars.Data.Interfaces
     {
         List<Transmission> GetTransmissions();
         Transmission GetTransmissionById(int? id);
+        void InsertTransmission(Transmission transmission);
     }
 }

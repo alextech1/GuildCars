@@ -11,5 +11,6 @@ namespace GuildCars.Data.Interfaces
     {
         List<InteriorColor> GetInteriorColors();
         InteriorColor GetInteriorColorById(int? id);
+        void InsertInteriorColor(InteriorColor interiorColor);
     }
 }

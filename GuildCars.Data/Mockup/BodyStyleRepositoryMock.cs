@@ -28,5 +28,10 @@ namespace GuildCars.Data.Mockup
         {
             return bodyStyles;
         }
+
+        public void InsertBodyStyle(BodyStyle bodyStyle)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -25,5 +25,10 @@ namespace GuildCars.Data.Mockup
         {
             return conditions;
         }
+
+        public void InsertCondition(Condition condition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

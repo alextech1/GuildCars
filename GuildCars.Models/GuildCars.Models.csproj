@@ -46,7 +46,7 @@
     <Compile Include="Entity\Make.cs" />
     <Compile Include="Entity\Model.cs" />
     <Compile Include="Entity\PurchaseType.cs" />
-    <Compile Include="Entity\Role.cs" />
+    <Compile Include="Entity\GuildRole.cs" />
     <Compile Include="Entity\Specials.cs" />
     <Compile Include="Entity\State.cs" />
     <Compile Include="Entity\Transaction.cs" />

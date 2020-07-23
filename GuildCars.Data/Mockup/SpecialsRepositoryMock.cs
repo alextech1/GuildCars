@@ -47,5 +47,15 @@ namespace GuildCars.Data.Mockup
         {
             specialsList.RemoveAll(x => x.SpecialsID == id);
         }
+
+        public void Update(Specials specials)
+        {
+            Specials currentSpecial = GetSpecialsById(specials.SpecialsID);
+
+            currentSpecial.Title = specials.Title;
+            currentSpecial.Description = specials.Description;
+            currentSpecial.ImageFileName = "onsale500.png";
+            //specials.ImageFileName = "onsale500.png";
+        }
     }
 }

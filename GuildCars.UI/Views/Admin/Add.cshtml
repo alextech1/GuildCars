@@ -104,6 +104,10 @@
 {
     <script>
         $(document).ready(function () {
+            transmissionSelect();
+
+            var $trans = $('#transmissions');
+
             $('#frmAddVehicle').validate({
                 rules: {
                     'Car.MakeID': {
@@ -161,5 +165,13 @@
                 }
             });
         });
+
+        function transmissionSelect() {
+            var html = '<option value="1">Automatic</option>';
+            html += '<option value="2">Manual</option>';
+            $('#transmissions').html(html);
+        }
+
+
     </script>
 }

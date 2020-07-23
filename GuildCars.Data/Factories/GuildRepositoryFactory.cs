@@ -1,5 +1,4 @@
 ﻿using GuildCars.Data.ADO;
-using GuildCars.Data.EF;
 using GuildCars.Data.Interfaces;
 using GuildCars.Data.Mockup;
 using System;
@@ -20,8 +19,8 @@ namespace GuildCars.Data.Factories
                     return new GuildRepositoryMock();
                 case "ADO":
                     return new GuildRepositoryADO();
-                case "EF":
-                    return new GuildRepositoryEF();
+                //case "EF":
+                //    return new GuildRepositoryEF();
                 default:
                     throw new Exception("Could not find mode in configuration");
             }

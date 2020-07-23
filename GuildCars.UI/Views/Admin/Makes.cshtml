@@ -1,4 +1,4 @@
-﻿@model List<GuildCars.UI.Models.MakesViewModel>
+﻿@model GuildCars.UI.Models.MakesViewModel
 @{
     ViewBag.Title = "Makes";
 }
@@ -21,6 +21,23 @@
     }
 </style>
 
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-6">
+        <h2>Add Make</h2>
+        @using (Html.BeginForm("Makes", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddMake" }))
+        {
+            <div class="row">
+                <div class="form-group">
+                    <label>Make</label>
+                    @Html.TextBoxFor(m => m.Make.MakeName, new { @class = "form-control" })
+                </div>
+            </div>
+            <button class="btn btn-primary">Add</button>
+        }
+    </div>
+</div>
+
+
 <h2>Makes</h2>
 
 <div>
@@ -31,7 +48,7 @@
             <th>User</th>
         </tr>
 
-        @foreach (var make in Model)
+        @foreach (var make in @Model.MakesVM)
         {
             <tr>
                 <td>@make.MakeName</td>
