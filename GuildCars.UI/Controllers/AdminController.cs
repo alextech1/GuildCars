@@ -464,20 +464,16 @@ namespace GuildCars.UI.Controllers
             var model = new ModelsViewModel();
 
             var modelsRepo = ModelFactory.GetRepository();
-            var makesRepo = MakeFactory.GetRepository();
-
-            //model.Models = modelsRepo.GetModels();
-            //model.Makes = new List<Make>();
-            //model.ModelsVM = new List<ModelsViewModel>();
+            var makesRepo = MakeFactory.GetRepository();            
 
             List<ModelsViewModel> modelList = allModels.Select(x => new ModelsViewModel
             {
                 MakeName = allMakes.Where(y => y.MakeID == x.MakeID).Select(y => y.MakeName).FirstOrDefault(),
-                //Makes = makesRepo.GetMakes(),
                 ModelName = x.ModelName,
                 DateAdded = x.DateAdded,
                 User = allUsers.Where(y => y.Id == x.UserID).Select(y => y.Email).FirstOrDefault()
             }).ToList();
+
 
             ModelsViewModel viewModel = new ModelsViewModel
             {
