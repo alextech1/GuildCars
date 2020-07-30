@@ -128,7 +128,7 @@ namespace GuildCars.Data.ADO
                 cmd.Parameters.AddWithValue("@MSRP", car.MSRP);
                 cmd.Parameters.AddWithValue("@Description", car.Description);
                 cmd.Parameters.AddWithValue("@DateAdded", car.DateAdded);
-                cmd.Parameters.AddWithValue("@Photo", car.Photo);               
+                cmd.Parameters.AddWithValue("@Photo", car.Photo);
 
                 conn.Open();
 
@@ -155,52 +155,29 @@ namespace GuildCars.Data.ADO
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
 
+                if (parameters.Mileage == "used")
+                {
+                    query += "AND Car.Mileage != 'New' ";
+                }
+                if (parameters.Mileage == "new")
+                {
+                    query += "AND Car.Mileage = 'New' ";
+                }
+                if (parameters.OnSale == "true")
+                {
+                    query += "AND Car.OnSale = '1' ";
+                }
+
                 if (!string.IsNullOrEmpty(parameters.Make))
                 {
-                    if (parameters.Mileage == "used")
-                    {
-                        query += "AND Make.MakeName LIKE @makeName AND Car.Mileage != 'New' ";
-                        cmd.Parameters.AddWithValue("@makeName", parameters.Make + '%');
-                    }
-                    else if (parameters.Mileage == "new")
-                    {
-                        query += "AND Make.MakeName LIKE @makeName AND Car.Mileage = 'New' ";
-                        cmd.Parameters.AddWithValue("@makeName", parameters.Make + '%');
-                    }
-                    else if (parameters.OnSale == "true")
-                    {
-                        query += "AND Make.MakeName LIKE @makeName AND Car.OnSale = '1' ";
-                        cmd.Parameters.AddWithValue("@makeName", parameters.Make + '%');
-                    }
-                    else
-                    {
-                        query += "AND Make.MakeName LIKE @makeName ";
-                        cmd.Parameters.AddWithValue("@makeName", parameters.Make + '%');
-                    }
+                    query += "AND Make.MakeName LIKE @makeName ";
+                    cmd.Parameters.AddWithValue("@makeName", parameters.Make + '%');
                 }
 
                 if (!string.IsNullOrEmpty(parameters.Model))
                 {
-                    if (parameters.Mileage == "used")
-                    {
-                        query += "AND Model.ModelName LIKE @modelName AND Car.Mileage != 'New' ";
-                        cmd.Parameters.AddWithValue("@modelName", parameters.Make + '%');
-                    }
-                    else if (parameters.Mileage == "new")
-                    {
-                        query += "AND Model.ModelID LIKE @modelName AND Car.Mileage = 'New' ";
-                        cmd.Parameters.AddWithValue("@modelName", parameters.Make + '%');
-                    }
-                    else if (parameters.OnSale == "true")
-                    {
-                        query += "AND Make.ModelName LIKE @modelName AND Car.OnSale = '1' ";
-                        cmd.Parameters.AddWithValue("@modelName", parameters.Make + '%');
-                    }
-                    else
-                    {
-                        query += "AND Model.ModelName LIKE @modelName ";
-                        cmd.Parameters.AddWithValue("@modelName", parameters.Make + '%');
-                    }
+                    query += "AND Model.ModelName LIKE @modelName ";
+                    cmd.Parameters.AddWithValue("@modelName", parameters.Make + '%');
                 }
 
                 if (!string.IsNullOrEmpty(parameters.MinPrice) || !string.IsNullOrEmpty(parameters.MaxPrice))

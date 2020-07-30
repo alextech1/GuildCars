@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GuildCars.Models.Entity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace GuildCars.UI.Models

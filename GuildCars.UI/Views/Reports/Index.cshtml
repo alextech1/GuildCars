@@ -3,6 +3,16 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Reports</h2>
-
+<br />
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Reports</h2>
+    </div>
+    <div class="col-xs-12">
+        @Html.ActionLink("Inventory Report", "Inventory", "Reports", null)
+    </div>
+    <div class="col-xs-12">
+        @Html.ActionLink("Sales Report", "Sales", "Reports", null)
+    </div>
+</div>
 

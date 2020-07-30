@@ -9,3 +9,4 @@ C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\Gu
 C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.csproj.CopyComplete
 C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.dll
 C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.pdb
+C:\Users\cashamerica12345\Documents\TheSoftwareGuild\BADGE 4\Final\assignment\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.csprojAssemblyReference.cache

@@ -1,0 +1,98 @@
+﻿@model GuildCars.UI.Models.AdminUserViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+
+@if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+{
+    <h2>Administrator</h2>
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("AdminRegister", "Admin", FormMethod.Post, new { @class = "form-horizontal", id = "frmAddUser" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-10">
+            <label>First Name</label>
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <label>Last Name</label>
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <label>Email</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <label>Password</label>
+            @Html.PasswordFor(m => m.Password, new { id = "password", @class = "form-control password" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <label>Confirm Password</label>
+            @Html.PasswordFor(m => m.ConfirmPassword, new { id = "confirm_password", @class = "form-control confirm_password" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <label>Role</label>
+            @Html.DropDownListFor(m => m.Role.RoleID, new SelectList(Model.Roles, "RoleID", "RoleName", Model.RolesID), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Register" />
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#frmAddUser').validate({
+                rules: {
+                    'FirstName': {
+                        required: true
+                    },
+                    'LastName': {
+                        required: true
+                    },
+                    'Email': {
+                        required: true
+                    },
+                    'Password': {
+                        required: true
+                    },
+                    'ConfirmPassword': {
+                        required: true
+                    },
+                    'Roles': {
+                        required: true
+                    }
+                }
+            });
+            $('#password, #confirm_password').on('keyup', function () {
+                if ($('#password').val() == $('#confirm_password').val()) {
+                    $('#message').html('Matches').css('color', 'green');
+                } else
+                    $('#message').html('Not Matching').css('color', 'red');
+            });
+        });
+    </script>
+}

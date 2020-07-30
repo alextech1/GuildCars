@@ -51,7 +51,9 @@
     <Compile Include="Entity\State.cs" />
     <Compile Include="Entity\Transaction.cs" />
     <Compile Include="Entity\Transmission.cs" />
+    <Compile Include="Entity\User.cs" />
     <Compile Include="Queries\ListingSearchParameters.cs" />
+    <Compile Include="Queries\ReportsSearchParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

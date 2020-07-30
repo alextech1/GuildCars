@@ -9,13 +9,14 @@ namespace GuildCars.UI.Models
 {
     public class ModelsViewModel
     {
-        public Model Model { get; set; }
+        public Car Car { get; set; }
+        public Model Model { get; set; }        
         public IEnumerable<Model> Models { get; set; }
-        public int? ModelsID { get; set; }
-        public List<ModelsViewModel> ModelsVM { get; set; }
+        public int? ModelsID { get; set; }        
         public Make Make { get; set; }
         public IEnumerable<Make> Makes { get; set; }
         public int? MakesID { get; set; }
+        public List<ModelsViewModel> ModelsVM { get; set; }
         public string MakeName { get; set; }
         public string ModelName { get; set; }
         public string DateAdded { get; set; }

@@ -1,5 +1,91 @@
 USE GuildCarsEF2
 
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'UsersSelectAll')
+		DROP PROC UsersSelectAll
+GO
+
+CREATE PROC UsersSelectAll AS
+BEGIN 
+	SELECT Id, FirstName, LastName, Email, UserName
+	FROM AspNetUsers
+END
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'UsersSelect')
+		DROP PROC UsersSelect
+GO
+
+CREATE PROC UsersSelect (
+	@Id int
+) AS
+BEGIN
+	SELECT Id, FirstName, LastName, Email, UserName
+	FROM AspNetUsers
+	WHERE Id = @Id
+END 
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'UsersInsert')
+		DROP PROC UsersInsert
+GO
+
+CREATE PROC UsersInsert (
+	@Id nvarchar(50) output,
+	@FirstName nvarchar(25),
+	@LastName nvarchar(25),
+	@RoleID int,
+	@Email nvarchar(100),
+	@PasswordHash nvarchar(100),
+	@UserName nvarchar(50)
+) AS
+BEGIN
+	INSERT INTO AspNetUsers(FirstName, LastName, RoleID, Email, PasswordHash, UserName)
+	VALUES (@FirstName, @LastName, @RoleID, @Email, @PasswordHash, @UserName);
+
+	SET @Id = SCOPE_IDENTITY();
+END
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'UsersUpdate')
+		DROP PROC UsersUpdate
+GO
+
+CREATE PROC UsersUpdate (
+	@Id nvarchar(100),
+	@FirstName nvarchar(25),
+	@LastName nvarchar(25),
+	@RoleID int,
+	@Email nvarchar(100),
+	@PasswordHash nvarchar(100),
+	@UserName nvarchar(50)
+
+) AS
+BEGIN
+	UPDATE AspNetUsers SET
+		Id = @Id,
+		FirstName = @FirstName,
+		LastName = @LastName,
+		RoleID = @RoleID,
+		Email = @Email,
+		PasswordHash = @PasswordHash,
+		UserName = @UserName
+	WHERE Id = @Id
+END
+GO
+
+
+
+
+--Cars-------------------------------------------
+
+
+
+
 IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
 	WHERE ROUTINE_NAME = 'CarsSelectAll')
 		DROP PROC CarsSelectAll
@@ -518,11 +604,11 @@ GO
 
 
 IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
-	WHERE ROUTINE_NAME = 'RolesSelectAll')
-		DROP PROC RolesSelectAll
+	WHERE ROUTINE_NAME = 'GuildRolesSelectAll')
+		DROP PROC GuildRolesSelectAll
 GO
 
-CREATE PROC RolesSelectAll AS
+CREATE PROC GuildRolesSelectAll AS
 BEGIN 
 	SELECT RoleID, RoleName
 	FROM GuildRole
@@ -681,7 +767,7 @@ GO
 
 CREATE PROC TransactionsSelectAll AS
 BEGIN 
-	SELECT TransactionID, CarID, UserID, PurchaseDate, FirstName, [Role], Email, AddressStreet1,
+	SELECT TransactionID, CarID, UserID, PurchaseDate, FirstName, LastName, [Role], Email, AddressStreet1,
 	AddressStreet2, City, StateID, ZipCode, PurchasePrice, PurchaseTypeID
 	FROM [Transaction]
 END
@@ -696,14 +782,44 @@ CREATE PROC TransactionsSelect (
 	@TransactionID int
 ) AS
 BEGIN
-	SELECT TransactionID, CarID, UserID, PurchaseDate, FirstName, [Role], Email, AddressStreet1,
+	SELECT TransactionID, CarID, UserID, PurchaseDate, FirstName, LastName, [Role], Email, AddressStreet1,
 	AddressStreet2, City, StateID, ZipCode, PurchasePrice, PurchaseTypeID
 	FROM [Transaction]
 	WHERE TransactionID = @TransactionID
 END 
 GO
 
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'TransactionsInsert')
+		DROP PROC TransactionsInsert
+GO
 
+CREATE PROC TransactionsInsert (
+	@TransactionID int output,
+	@CarID int,
+	@UserID int,
+	@PurchaseDate nvarchar(20),
+	@FirstName nvarchar(25),
+	@LastName nvarchar(25),
+	@Role int,
+	@Email nvarchar(100),
+	@AddressStreet1 nvarchar(100),
+	@AddressStreet2 nvarchar(100),
+	@City nvarchar(50),
+	@StateID int,
+	@ZipCode int,
+	@PurchasePrice decimal,
+	@PurchaseTypeID int
+) AS
+BEGIN
+	INSERT INTO [Transaction] (CarID, UserID, PurchaseDate, FirstName, LastName, [Role], Email, AddressStreet1, AddressStreet2,
+	City, StateID, ZipCode, PurchasePrice, PurchaseTypeID)	
+	VALUES (@CarID, @UserID, @PurchaseDate, @FirstName, @LastName, @Role, @Email, @AddressStreet1, @AddressStreet2,
+	@City, @StateID, @ZipCode, @PurchasePrice, @PurchaseTypeID);
+
+	SET @TransactionID = SCOPE_IDENTITY();
+END
+GO
 
 --Transmission
 
@@ -755,17 +871,3 @@ BEGIN
 END
 GO
 
-
-declare @procName varchar(500)
-declare cur cursor 
-
-for select [name] from sys.objects where type = 'p'
-open cur
-fetch next from cur into @procName
-while @@fetch_status = 0
-begin
-    exec('drop procedure [' + @procName + ']')
-    fetch next from cur into @procName
-end
-close cur
-deallocate cur

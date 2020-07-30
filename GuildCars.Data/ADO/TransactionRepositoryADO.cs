@@ -94,5 +94,41 @@ namespace GuildCars.Data.ADO
 
             return transactions;
         }
+
+        public void InsertTransaction(Transaction transaction)
+        {
+            using (var conn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("TransactionsInsert", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter param = new SqlParameter("@TransactionID", SqlDbType.Int);
+                param.Direction = ParameterDirection.Output;
+
+                cmd.Parameters.Add(param);
+                cmd.Parameters.AddWithValue("@TransactionID", transaction.TransactionID);
+                cmd.Parameters.AddWithValue("@CarID", transaction.CarID);
+                cmd.Parameters.AddWithValue("@UserID", transaction.UserID);
+                cmd.Parameters.AddWithValue("@PurchaseDate", transaction.PurchaseDate);
+                cmd.Parameters.AddWithValue("@FirstName", transaction.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", transaction.LastName);
+                cmd.Parameters.AddWithValue("@Role", transaction.Role);
+                cmd.Parameters.AddWithValue("@Email", transaction.Email);
+                cmd.Parameters.AddWithValue("@AddressStreet1", transaction.AddressStreet1);
+                cmd.Parameters.AddWithValue("@AddressStreet2", transaction.AddressStreet2);
+                cmd.Parameters.AddWithValue("@City", transaction.City);
+                cmd.Parameters.AddWithValue("@StateID", transaction.StateID);
+                cmd.Parameters.AddWithValue("@ZipCode", transaction.ZipCode);
+                cmd.Parameters.AddWithValue("@PurchasePrice", transaction.PurchasePrice);
+                cmd.Parameters.AddWithValue("@PurchaseTypeID", transaction.PurchaseTypeID);
+
+
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+
+                transaction.TransactionID = (int)param.Value;
+            }
+        }
     }
 }

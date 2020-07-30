@@ -34,6 +34,8 @@ namespace GuildCars.UI.Models
         public decimal? SalePrice { get; set; }
         public string Description { get; set; }
         public string DateAdded { get; set; }
+        public Model Model { get; set; }
+
         public HttpPostedFileBase ImageUpload { get; set; }
 
         public CarAddViewModel()

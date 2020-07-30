@@ -1,0 +1,73 @@
+﻿@model GuildCars.UI.Models.GroupedInventoryViewModel
+@{
+    ViewBag.Title = "Inventory";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h2>Inventory Report</h2>
+
+<h3>New Vehicles</h3>
+<div>
+    <table>
+        <tr>
+            <th>Year</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Count</th>
+            <th>Stock Value</th>
+        </tr>
+
+        @foreach (var report in Model.NewVehicles)
+        {
+            <tr>
+                <td>@report.Year</td>
+                <td>@report.Make</td>
+                <td>@report.Model</td>
+                <td>@report.Count</td>
+                <td>@report.StockValue</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<h3>Used Vehicles</h3>
+<div>
+    <table>
+        <tr>
+            <th>Year</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Count</th>
+            <th>Stock Value</th>
+        </tr>
+
+        @foreach (var report in Model.UsedVehicles)
+        {
+            <tr>
+                <td>@report.Year</td>
+                <td>@report.Make</td>
+                <td>@report.Model</td>
+                <td>@report.Count</td>
+                <td>@report.StockValue</td>
+            </tr>
+        }
+
+    </table>
+</div>

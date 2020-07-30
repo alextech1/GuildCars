@@ -27,19 +27,22 @@
     }
 </style>
 
+<h2>Models</h2>
+
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-6">
         <h2>Add Model</h2>
-        @using (Html.BeginForm("Models", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddModel" }))
+        @using (Html.BeginForm("Models", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddVehicle" }))
         {
+            @Html.ValidationSummary()
             <div class="row">
                 <div class="form-group col-25">
-                    <label>Model</label>
-                    @Html.TextBoxFor(m => m.Model.ModelName, new { @class = "form-control" })
+                    <label>Make</label>
+                    @Html.DropDownListFor(m => m.Car.MakeID, new SelectList(Model.Makes, "MakeID", "MakeName", Model.MakesID), new { @class = "form-control" })
                 </div>
                 <div class="form-group col-25">
-                    <label>Make</label>
-                    @Html.DropDownListFor(m => m.Make.MakeID, new SelectList(Model.Makes, "MakeID", "MakeName", Model.MakesID), new { @class = "form-control" })
+                    <label>Model</label>
+                    @Html.TextBoxFor(m => m.Car.Model.ModelName, new { @class = "form-control" })
                 </div>
             </div>
             <button class="btn btn-primary">Add</button>
@@ -47,13 +50,34 @@
     </div>
 </div>
 
+<br />
+<div>
+    <table>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Date Added</th>
+            <th>User</th>
+        </tr>
 
+        @foreach (var make in @Model.ModelsVM)
+        {
+            <tr>
+                <td>@make.MakeName</td>
+                <td>@make.ModelName</td>
+                <td>@make.DateAdded</td>
+                <td>@make.User</td>
+
+            </tr>
+        }
+
+    </table>
+</div>
 
 
 @section scripts
 {
-    <script>
-        $(document).ready(function () {
+    <script>       
 
             $('#frmAddModel').validate({
                 rules: {

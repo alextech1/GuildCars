@@ -1,5 +1,5 @@
-﻿using GuildCars.Data.Factories;
-using GuildCars.Models.Entity;
+﻿using GuildCars.Models.Entity;
+using GuildCars.UI.Factories;
 using GuildCars.UI.Models;
 using System;
 using System.Collections.Generic;

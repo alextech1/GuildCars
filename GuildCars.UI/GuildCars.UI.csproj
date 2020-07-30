@@ -210,21 +210,65 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
+    <Compile Include="EF\BodyStyleRepositoryEF.cs" />
+    <Compile Include="EF\ConditionRepositoryEF.cs" />
+    <Compile Include="EF\ExteriorColorRepositoryEF.cs" />
+    <Compile Include="EF\GuildRepositoryEF.cs" />
+    <Compile Include="EF\InteriorColorRepositoryEF.cs" />
+    <Compile Include="EF\MakeRepositoryEF.cs" />
+    <Compile Include="EF\ModelRepositoryEF.cs" />
+    <Compile Include="EF\PurchaseTypeRepositoryEF.cs" />
+    <Compile Include="EF\RoleRepositoryEF.cs" />
+    <Compile Include="EF\SpecialsRepositoryEF.cs" />
+    <Compile Include="EF\StateRepositoryEF.cs" />
+    <Compile Include="EF\TransactionRepositoryEF.cs" />
+    <Compile Include="EF\TransmissionRepositoryEF.cs" />
+    <Compile Include="EF\UserRepositoryEF.cs" />
+    <Compile Include="Factories\BodyStyleFactory.cs" />
+    <Compile Include="Factories\ConditionFactory.cs" />
+    <Compile Include="Factories\ExteriorColorFactory.cs" />
+    <Compile Include="Factories\GuildRepositoryFactory.cs" />
+    <Compile Include="Factories\InteriorColorFactory.cs" />
+    <Compile Include="Factories\MakeFactory.cs" />
+    <Compile Include="Factories\ModelFactory.cs" />
+    <Compile Include="Factories\PurchaseTypeFactory.cs" />
+    <Compile Include="Factories\RoleFactory.cs" />
+    <Compile Include="Factories\SpecialsFactory.cs" />
+    <Compile Include="Factories\StateFactory.cs" />
+    <Compile Include="Factories\TransactionFactory.cs" />
+    <Compile Include="Factories\TransmissionFactory.cs" />
+    <Compile Include="Factories\UserFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007211903055_CreateInit.cs" />
-    <Compile Include="Migrations\202007211903055_CreateInit.Designer.cs">
-      <DependentUpon>202007211903055_CreateInit.cs</DependentUpon>
+    <Compile Include="Migrations\202007241922322_CreateInit.cs" />
+    <Compile Include="Migrations\202007241922322_CreateInit.Designer.cs">
+      <DependentUpon>202007241922322_CreateInit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Mockup\BodyStyleRepositoryMock.cs" />
+    <Compile Include="Mockup\ConditionRepositoryMock.cs" />
+    <Compile Include="Mockup\ExteriorColorRepositoryMock.cs" />
+    <Compile Include="Mockup\GuildRepositoryMock.cs" />
+    <Compile Include="Mockup\InteriorColorRepositoryMock.cs" />
+    <Compile Include="Mockup\MakeRepositoryMock.cs" />
+    <Compile Include="Mockup\ModelRepositoryMock.cs" />
+    <Compile Include="Mockup\PurchaseTypeRepositoryMock.cs" />
+    <Compile Include="Mockup\RoleRepositoryMock.cs" />
+    <Compile Include="Mockup\SpecialsRepositoryMock.cs" />
+    <Compile Include="Mockup\StateRepositoryMock.cs" />
+    <Compile Include="Mockup\TransactionRepositoryMock.cs" />
+    <Compile Include="Mockup\TransmissionRepositoryMock.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminUserViewModel.cs" />
     <Compile Include="Models\CarAddViewModel.cs" />
     <Compile Include="Models\CarEditViewModel.cs" />
     <Compile Include="Models\CarViewModel.cs" />
     <Compile Include="Models\ContactViewModel.cs" />
+    <Compile Include="Models\GroupedInventoryViewModel.cs" />
     <Compile Include="Models\GroupedUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InventoryViewModel.cs" />
     <Compile Include="Models\MakesViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModelsViewModel.cs" />
@@ -232,6 +276,7 @@
     <Compile Include="Models\ReportsViewModel.cs" />
     <Compile Include="Models\SpecialsViewModel.cs" />
     <Compile Include="Models\UserEditViewModel.cs" />
+    <Compile Include="Models\UserListViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -325,6 +370,9 @@
     <Content Include="Views\Admin\Models.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Reports\Sales.cshtml" />
+    <Content Include="Views\Admin\AddModel.cshtml" />
+    <Content Include="Views\Reports\Inventory.cshtml" />
+    <Content Include="Views\Admin\AdminRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -351,8 +399,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007211903055_CreateInit.resx">
-      <DependentUpon>202007211903055_CreateInit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007241922322_CreateInit.resx">
+      <DependentUpon>202007241922322_CreateInit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,5 @@
-﻿using GuildCars.Data.Factories;
-using GuildCars.Data.Interfaces;
-using GuildCars.Data.Mockup;
+﻿using GuildCars.Data.Interfaces;
+using GuildCars.UI.Mockup;
 using GuildCars.Models.Entity;
 using GuildCars.UI.Models;
 using GuildCars.UI.Utilities;
@@ -15,6 +14,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
 using GuildCars.Data;
+using Microsoft.AspNet.Identity.Owin;
+using GuildCars.UI.Factories;
 
 namespace GuildCars.UI.Controllers
 {
@@ -27,6 +28,7 @@ namespace GuildCars.UI.Controllers
         }
         public AdminController() { }
 
+        [Authorize]
         public ActionResult Used()
         {
             CarViewModel carViewModel = new CarViewModel();
@@ -55,15 +57,14 @@ namespace GuildCars.UI.Controllers
             return View(carVMList);
         }
 
+        [Authorize]
         public ActionResult New()
         {
             CarViewModel carViewModel = new CarViewModel();
 
-            carViewModel.IGuildRepository = GuildRepositoryFactory.GetRepository();
+            var carRepo = GuildRepositoryFactory.GetRepository();
 
-            carViewModel.Cars = carViewModel.IGuildRepository.GetAllCars();
-
-            var carList = carViewModel.Cars;
+            List<Car> carList = carRepo.GetAllCars();
 
             List<CarViewModel> carVMList = carList.Select(x => new CarViewModel
             {
@@ -85,33 +86,54 @@ namespace GuildCars.UI.Controllers
             return View(carVMList);
         }
 
+        [Authorize]
         public ActionResult Vehicles()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult Details(int id)
         {
             CarViewModel carViewModel = new CarViewModel();
 
-            carViewModel.IGuildRepository = GuildRepositoryFactory.GetRepository();
+            var carRepo = GuildRepositoryFactory.GetRepository();
+            var makesRepo = MakeFactory.GetRepository();
+            var modelRepo = ModelFactory.GetRepository();
+            var typesRepo = ConditionFactory.GetRepository();
+            var bodyStylesRepo = BodyStyleFactory.GetRepository();
+            var transmissionsRepo = TransmissionFactory.GetRepository();
+            var extColorsRepo = ExteriorColorFactory.GetRepository();
+            var intColorsRepo = InteriorColorFactory.GetRepository();
 
-            var carvm = carViewModel.IGuildRepository.GetCarById(id);
+            var carvm = carRepo.GetCarById(id);
 
             carViewModel.CarID = carvm.CarID;
             carViewModel.Year = carvm.Year;
-            carViewModel.MakeName = carvm.Make.MakeName;
-            carViewModel.ModelName = carvm.Model.ModelName;
-            carViewModel.BodyStyleName = carvm.BodyStyle.BodyStyleName;
-            carViewModel.TransmissionType = carvm.Transmission.TransmissionType;
-            carViewModel.ExteriorColorName = carvm.ExteriorColor.Color;
-            carViewModel.InteriorColorName = carvm.InteriorColor.Color;
+            carViewModel.Make = new Make();
+            carViewModel.Make.MakeID = carvm.MakeID;
+            carViewModel.MakeName = makesRepo.GetMakeById(carvm.MakeID).MakeName;
+            carViewModel.Model = new Model();
+            carViewModel.Model.ModelID = carvm.ModelID;
+            carViewModel.ModelName = modelRepo.GetModelById(carvm.ModelID).ModelName;
+            carViewModel.BodyStyle = new BodyStyle();
+            carViewModel.BodyStyleID = carvm.BodyStyleID;
+            carViewModel.BodyStyleName = bodyStylesRepo.GetBodyStyleById(carvm.BodyStyleID).BodyStyleName;
+            carViewModel.Transmission = new Transmission();
+            carViewModel.TransmissionID = carvm.TransmissionID;
+            carViewModel.TransmissionType = transmissionsRepo.GetTransmissionById(carvm.TransmissionID).TransmissionType;
+            carViewModel.ExteriorColor = new ExteriorColor();
+            carViewModel.ExteriorColorID = carvm.ExteriorColorID;
+            carViewModel.ExteriorColorName = extColorsRepo.GetExteriorColorById(carvm.ExteriorColorID).Color;
+            carViewModel.InteriorColorID = carvm.InteriorColorID;
+            carViewModel.InteriorColorName = intColorsRepo.GetInteriorColorById(carvm.InteriorColorID).Color;
             carViewModel.Mileage = carvm.Mileage;
             carViewModel.VIN = carvm.VIN;
             carViewModel.SalePrice = carvm.SalePrice;
             carViewModel.MSRP = carvm.MSRP;
             carViewModel.ImageFileName = carvm.Photo;
             carViewModel.Description = carvm.Description;
+
 
             return View(carViewModel);
         }
@@ -190,7 +212,7 @@ namespace GuildCars.UI.Controllers
                     model.Car.Transmission = new Transmission();
                     model.Car.Transmission.TransmissionID = model.Car.TransmissionID;
                     model.Car.Transmission.TransmissionType = transmissionsRepo.GetTransmissionById(model.Car.TransmissionID).TransmissionType;
-                    
+
 
                     if (model.ImageUpload != null && model.ImageUpload.ContentLength > 0)
                     {
@@ -212,15 +234,6 @@ namespace GuildCars.UI.Controllers
                         model.Car.Photo = Path.GetFileName(filePath);
                     }
 
-                    carRepo.InsertCar(model.Car);
-                    bodyStylesRepo.InsertBodyStyle(model.Car.BodyStyle);
-                    typesRepo.InsertCondition(model.Car.Condition);
-                    extColorsRepo.InsertExteriorColor(model.Car.ExteriorColor);
-                    intColorsRepo.InsertInteriorColor(model.Car.InteriorColor);
-                    makesRepo.InsertMake(model.Car.Make);
-                    modelRepo.InsertModel(model.Car.Model);
-                    transmissionsRepo.InsertTransmission(model.Car.Transmission);
-
                     if (Settings.GetRepositoryType() == "EF")
                     {
                         _context.Cars.Add(model.Car);
@@ -230,10 +243,18 @@ namespace GuildCars.UI.Controllers
 
                         _context.SaveChanges();
                     }
+                    else
+                    {
+                        carRepo.InsertCar(model.Car);
+                        bodyStylesRepo.InsertBodyStyle(model.Car.BodyStyle);
+                        typesRepo.InsertCondition(model.Car.Condition);
+                        extColorsRepo.InsertExteriorColor(model.Car.ExteriorColor);
+                        intColorsRepo.InsertInteriorColor(model.Car.InteriorColor);
+                        makesRepo.InsertMake(model.Car.Make);
+                        modelRepo.InsertModel(model.Car.Model);
+                        transmissionsRepo.InsertTransmission(model.Car.Transmission);
+                    }
 
-                    
-
-                    
                     return RedirectToAction("Vehicles");
                 }
                 catch (Exception ex)
@@ -314,6 +335,7 @@ namespace GuildCars.UI.Controllers
 
         }
 
+        [Authorize]
         public ActionResult Specials()
         {
             var model = new SpecialsViewModel();
@@ -361,6 +383,7 @@ namespace GuildCars.UI.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult DeleteSpecial(int id)
         {
             var specialsRepo = SpecialsFactory.GetRepository();
@@ -370,6 +393,7 @@ namespace GuildCars.UI.Controllers
             return RedirectToAction("Specials");
         }
 
+        [Authorize]
         public ActionResult Users()
         {
             var rolesRepo = RoleFactory.GetRepository();
@@ -464,7 +488,7 @@ namespace GuildCars.UI.Controllers
             var model = new ModelsViewModel();
 
             var modelsRepo = ModelFactory.GetRepository();
-            var makesRepo = MakeFactory.GetRepository();            
+            var makesRepo = MakeFactory.GetRepository();
 
             List<ModelsViewModel> modelList = allModels.Select(x => new ModelsViewModel
             {
@@ -478,6 +502,7 @@ namespace GuildCars.UI.Controllers
             ModelsViewModel viewModel = new ModelsViewModel
             {
                 Makes = makesRepo.GetMakes(),
+                Models = modelsRepo.GetModels(),
                 ModelsVM = modelList
             };
 
@@ -494,20 +519,18 @@ namespace GuildCars.UI.Controllers
                 var makesRepo = MakeFactory.GetRepository();
 
                 model.Model = new Model();
-                model.Model.Make.MakeID = model.Make.MakeID;
-                model.Model.Make.MakeName = makesRepo.GetMakeById(model.Make.MakeID).MakeName;
+                model.Model.MakeID = model.Car.MakeID;
+                model.Model.ModelName = model.Car.Model.ModelName;
                 model.Model.UserID = AuthorizeUtilities.GetUserId(this);
                 model.Model.DateAdded = DateTime.Now.ToString("MM/dd/yyyy");
+
                 modelsRepo.InsertModel(model.Model);
 
                 var allUsers = _context.Users.ToList();
                 var allMakes = _context.Makes.ToList();
                 var allModels = _context.Models.ToList();
 
-                model.Models = modelsRepo.GetModels();
-                model.ModelsVM = new List<ModelsViewModel>();
-
-                model.ModelsVM = allModels.Select(x => new ModelsViewModel
+                List<ModelsViewModel> modelList = allModels.Select(x => new ModelsViewModel
                 {
                     MakeName = allMakes.Where(y => y.MakeID == x.MakeID).Select(y => y.MakeName).FirstOrDefault(),
                     ModelName = x.ModelName,
@@ -515,7 +538,15 @@ namespace GuildCars.UI.Controllers
                     User = allUsers.Where(y => y.Id == x.UserID).Select(y => y.Email).FirstOrDefault()
                 }).ToList();
 
-                return View(model);
+
+                ModelsViewModel viewModel = new ModelsViewModel
+                {
+                    Makes = makesRepo.GetMakes(),
+                    Models = modelsRepo.GetModels(),
+                    ModelsVM = modelList
+                };
+
+                return View(viewModel);
             }
             else
             {
@@ -568,6 +599,57 @@ namespace GuildCars.UI.Controllers
             var contx = store.Context;
             contx.SaveChanges();
             return RedirectToAction("Users");
+        }
+
+        public ActionResult AdminRegister()
+        {
+            var rolesRepo = RoleFactory.GetRepository();
+
+            var user = new AdminUserViewModel
+            {
+                Roles = rolesRepo.GetRoles()
+            };
+
+            return View(user);
+        }
+
+        [HttpPost]
+
+        public async Task<ActionResult> AdminRegister(AdminUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    RoleID = model.Role.RoleID,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
+
+                var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var manager = new UserManager<ApplicationUser>(store);
+
+                var result = await manager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    var rolesRepo = RoleFactory.GetRepository();
+
+                    var modeluser = new AdminUserViewModel
+                    {
+                        Roles = rolesRepo.GetRoles()
+                    };
+                    return View(modeluser);
+
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -12,6 +12,11 @@ using System.Reflection;
 using Autofac.Integration.Mvc;
 using GuildCars.UI.Models;
 using Autofac.Integration.WebApi;
+using GuildCars.UI.EF;
+using GuildCars.Data.Interfaces;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 
 namespace GuildCars.UI
 {
@@ -34,10 +39,38 @@ namespace GuildCars.UI
             builder.RegisterSource(new ViewRegistrationSource());
 
             // manual registration of types;
+            builder.RegisterType<BodyStyleRepositoryEF>().As<IBodyStyleRepository>();
+            builder.RegisterType<ConditionRepositoryEF>().As<IConditionRepository>();
+            builder.RegisterType<ExteriorColorRepositoryEF>().As<IExteriorColorRepository>();
+            builder.RegisterType<GuildRepositoryEF>().As<IGuildRepository>();
+            builder.RegisterType<InteriorColorRepositoryEF>().As<IInteriorColorRepository>();
+            builder.RegisterType<MakeRepositoryEF>().As<IMakeRepository>();
+            builder.RegisterType<ModelRepositoryEF>().As<IModelRepository>();
+            builder.RegisterType<PurchaseTypeRepositoryEF>().As<IPurchaseTypeRepository>();
+            builder.RegisterType<RoleRepositoryEF>().As<IRoleRepository>();
+            builder.RegisterType<SpecialsRepositoryEF>().As<ISpecialsRepository>();
+            builder.RegisterType<StateRepositoryEF>().As<IStateRepository>();
+            builder.RegisterType<TransactionRepositoryEF>().As<ITransactionRepository>();
+            builder.RegisterType<TransmissionRepositoryEF>().As<ITransmissionRepository>();
+            builder.RegisterType<UserRepositoryEF>().As<IUserRepository>();
             builder.RegisterType<ApplicationDbContext>();
+            builder.Register(c => HttpContext.Current.GetOwinContext().Authentication).As<IAuthenticationManager>();
+
+
+            //builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerRequest();
+            //builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
+            //builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
+            //builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
+            //builder.Register<IAuthenticationManager>(c => HttpContext.Current.GetOwinContext().Authentication).InstancePerRequest();
+            //builder.Register<IDataProtectionProvider>(c => app.GetDataProtectionProvider()).InstancePerRequest();
+
 
             // For property injection using Autofac
             // builder.RegisterType<QuoteService>().PropertiesAutowired();
+
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterModelBinders(typeof(MvcApplication).Assembly);
+            builder.RegisterModule<AutofacWebTypesModule>();
 
             var container = builder.Build();
 

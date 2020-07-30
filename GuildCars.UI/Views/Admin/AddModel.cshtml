@@ -1,0 +1,38 @@
+﻿@model GuildCars.UI.Models.CarAddViewModel
+@{
+    ViewBag.Title = "AddModel";
+}
+
+<style>
+    .col-25 {
+        float: left;
+        width: 50%;
+        padding-right: 16px;
+    }
+
+    .largeTextBox {
+        height: 140px;
+        min-width: 97%;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-6">
+        <h2>Add Model</h2>
+        @using (Html.BeginForm("AddModel", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddVehicle" }))
+        {
+            @Html.ValidationSummary()
+            <div class="row">
+                <div class="form-group col-25">
+                    <label>Make</label>
+                    @Html.DropDownListFor(m => m.Car.MakeID, new SelectList(Model.Makes, "MakeID", "MakeName", Model.MakesID), new { @class = "form-control" })
+                </div>
+                <div class="form-group col-25">
+                    <label>Model</label>
+                    @Html.TextBoxFor(m => m.Car.Model.ModelName, new { @class = "form-control" })
+                </div>
+            </div>
+            <button class="btn btn-primary">Add</button>
+        }
+    </div>
+</div>

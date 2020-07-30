@@ -1,7 +1,7 @@
 namespace GuildCars.UI.Migrations
 {
-    using GuildCars.Data.Factories;
-    using GuildCars.Data.Mockup;
+    using GuildCars.UI.Factories;
+    using GuildCars.UI.Mockup;
     using GuildCars.Models.Entity;
     using GuildCars.UI.Models;
     using Microsoft.Ajax.Utilities;

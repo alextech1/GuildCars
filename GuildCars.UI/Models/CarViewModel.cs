@@ -39,6 +39,7 @@ namespace GuildCars.UI.Models
         public string ImageFileName { get; set; }
         public string Description { get; set; }
         public int Role { get; set; }
+        public bool IsBought { get; set; }
         public IGuildRepository IGuildRepository { get; set; }
 
         public CarViewModel()

@@ -11,5 +11,7 @@ namespace GuildCars.Data.Interfaces
     {
         List<Transaction> GetTransactions();
         Transaction GetTransactionById(int? id);
+        void InsertTransaction(Transaction transaction);
+
     }
 }

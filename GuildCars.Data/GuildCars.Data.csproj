@@ -50,19 +50,7 @@
     <Compile Include="ADO\StateRepositoryADO.cs" />
     <Compile Include="ADO\TransactionRepositoryADO.cs" />
     <Compile Include="ADO\TransmissionRepositoryADO.cs" />
-    <Compile Include="Factories\BodyStyleFactory.cs" />
-    <Compile Include="Factories\ConditionFactory.cs" />
-    <Compile Include="Factories\ExteriorColorFactory.cs" />
-    <Compile Include="Factories\GuildRepositoryFactory.cs" />
-    <Compile Include="Factories\InteriorColorFactory.cs" />
-    <Compile Include="Factories\MakeFactory.cs" />
-    <Compile Include="Factories\ModelFactory.cs" />
-    <Compile Include="Factories\PurchaseTypeFactory.cs" />
-    <Compile Include="Factories\RoleFactory.cs" />
-    <Compile Include="Factories\SpecialsFactory.cs" />
-    <Compile Include="Factories\StateFactory.cs" />
-    <Compile Include="Factories\TransactionFactory.cs" />
-    <Compile Include="Factories\TransmissionFactory.cs" />
+    <Compile Include="ADO\UserRepositoryADO.cs" />
     <Compile Include="Interfaces\IBodyStyleRepository.cs" />
     <Compile Include="Interfaces\IConditionRepository.cs" />
     <Compile Include="Interfaces\IExteriorColorRepository.cs" />
@@ -76,19 +64,7 @@
     <Compile Include="Interfaces\IStateRepository.cs" />
     <Compile Include="Interfaces\ITransactionRepository.cs" />
     <Compile Include="Interfaces\ITransmissionRepository.cs" />
-    <Compile Include="Mockup\BodyStyleRepositoryMock.cs" />
-    <Compile Include="Mockup\ConditionRepositoryMock.cs" />
-    <Compile Include="Mockup\ExteriorColorRepositoryMock.cs" />
-    <Compile Include="Mockup\GuildRepositoryMock.cs" />
-    <Compile Include="Mockup\InteriorColorRepositoryMock.cs" />
-    <Compile Include="Mockup\MakeRepositoryMock.cs" />
-    <Compile Include="Mockup\ModelRepositoryMock.cs" />
-    <Compile Include="Mockup\PurchaseTypeRepositoryMock.cs" />
-    <Compile Include="Mockup\RoleRepositoryMock.cs" />
-    <Compile Include="Mockup\SpecialsRepositoryMock.cs" />
-    <Compile Include="Mockup\StateRepositoryMock.cs" />
-    <Compile Include="Mockup\TransactionRepositoryMock.cs" />
-    <Compile Include="Mockup\TransmissionRepositoryMock.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
