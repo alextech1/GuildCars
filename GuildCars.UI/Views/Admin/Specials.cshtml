@@ -53,7 +53,7 @@
     <div class="col-xs-12">
         @foreach (var special in @Model.SpecialsList)
         {
-            <br/>
+            <br />
             <div class="row" style="border: 2px solid #0094ff;">
                 <div class="column one">
                     <img src="@Url.Content("~/Images/" + special.ImageFileName)" style="height: 80px; width:80px; margin:10px auto 10px; display:block" />
@@ -68,10 +68,32 @@
                     <br />
                     <div class="col-sm-6">
                         <a class="btn btn-danger" href="/Admin/DeleteSpecial/@special.SpecialsID" onclick="return confirm('Are you sure you want to delete @special.Title?'">
-                        Delete</a>
+                            Delete
+                        </a>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#frmAddSpecial').validate({
+                rules: {
+                    'Specials.Title': {
+                        required: true
+                    },
+                    'Specials.Description': {
+                        required: true
+                    }
+                }
+            });
+        });
+
+
+    </script>
+}

@@ -13,19 +13,26 @@ namespace GuildCars.UI.Models
     {
         public Car Car { get; set; }
         public int? CarID { get; set; }
+        public Make Make { get; set; }
         public IEnumerable<Make> Makes { get; set; }
         public int? MakesID { get; set; }
+        public Model Model { get; set; }
         public IEnumerable<Model> Models { get; set; }
         public int? ModelsID { get; set; }
-        public IEnumerable<Condition> Types { get; set; }
-        public int? TypesID { get; set; }
+        public Condition Condition { get; set; }
+        public IEnumerable<Condition> ConditionTypes { get; set; }
+        public int? ConditionTypesID { get; set; }
+        public BodyStyle BodyStyle { get; set; }
         public IEnumerable<BodyStyle> BodyStyles { get; set; }
         public int? BodyStylesID { get; set; }
         public int? Year { get; set; }
+        public Transmission Transmission { get; set; }
         public IEnumerable<Transmission> Transmissions { get; set; }
         public int? TransmissionsID { get; set; }
+        public ExteriorColor ExteriorColor { get; set; }
         public IEnumerable<ExteriorColor> ExteriorColors { get; set; }
         public int? ExteriorColorsID { get; set; }
+        public InteriorColor InteriorColor { get; set; }
         public IEnumerable<InteriorColor> InteriorColors { get; set; }
         public int? InteriorColorsID { get; set; }
         public string Mileage { get; set; }

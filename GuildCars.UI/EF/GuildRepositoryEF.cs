@@ -2,6 +2,7 @@
 using GuildCars.Data.Interfaces;
 using GuildCars.Models.Entity;
 using GuildCars.Models.Queries;
+using GuildCars.UI.Factories;
 using GuildCars.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -44,126 +45,129 @@ namespace GuildCars.UI.EF
 
         public IEnumerable<Car> Search(ListingSearchParameters parameters)
         {
-            List<Car> cars = new List<Car>();
+            var cars = _context.Cars.ToList();
 
-            using (var conn = new SqlConnection(Settings.GetConnectionString()))
+            List<Car> searchList = new List<Car>();
+            List<Car> searchList2 = new List<Car>();
+            var makesRepo = MakeFactory.GetRepository();
+            var modelRepo = ModelFactory.GetRepository();
+            var typesRepo = ConditionFactory.GetRepository();
+            var bodyStylesRepo = BodyStyleFactory.GetRepository();
+            var transmissionsRepo = TransmissionFactory.GetRepository();
+            var extColorsRepo = ExteriorColorFactory.GetRepository();
+            var intColorsRepo = InteriorColorFactory.GetRepository();
+
+            searchList = cars;
+
+            if (!string.IsNullOrEmpty(parameters.Make)) //FYI: we do not have a make null
             {
-                string query = "SELECT TOP 10 * FROM Car JOIN Make on Make.MakeID = Car.MakeID " +
-                    "JOIN Model on Model.ModelID = Car.ModelID " +
-                    "JOIN Condition on Condition.ConditionID = Car.ConditionID " +
-                    "JOIN BodyStyle on BodyStyle.BodyStyleID = Car.BodyStyleID " +
-                    "JOIN Transmission on Transmission.TransmissionID = Car.TransmissionID " +
-                    "JOIN ExteriorColor on ExteriorColor.ExteriorColorID = Car.ExteriorColorID " +
-                    "JOIN InteriorColor on InteriorColor.InteriorColorID = Car.InteriorColorID ";
-
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conn;
-
                 if (parameters.Mileage == "used")
                 {
-                    query += "AND Car.Mileage != 'New' ";
+                    searchList = cars.Where(x => x.ConditionID == 2 && makesRepo.GetMakeById(x.MakeID).MakeName.ToLower().Contains(parameters.Make.ToLower())).ToList();
                 }
-                if (parameters.Mileage == "new")
+                else if (parameters.Mileage == "new")
                 {
-                    query += "AND Car.Mileage = 'New' ";
+                    searchList = cars.Where(x => x.ConditionID == 1 && makesRepo.GetMakeById(x.MakeID).MakeName.ToLower().Contains(parameters.Make.ToLower())).ToList();
                 }
-                if (parameters.OnSale == "true")
+                else if (parameters.OnSale == "true")
                 {
-                    query += "AND Car.OnSale = '1' ";
+                    searchList = cars.Where(x => x.OnSale == true && makesRepo.GetMakeById(x.MakeID).MakeName.ToLower().Contains(parameters.Make.ToLower())).ToList();
                 }
-
-                if (!string.IsNullOrEmpty(parameters.Make))
+                else
                 {
-                    query += "AND Make.MakeName LIKE @makeName ";
-                    cmd.Parameters.AddWithValue("@makeName", parameters.Make + '%');
-                }
-
-                if (!string.IsNullOrEmpty(parameters.Model))
-                {
-                    query += "AND Model.ModelName LIKE @modelName ";
-                    cmd.Parameters.AddWithValue("@modelName", parameters.Make + '%');
-                }
-
-                if (!string.IsNullOrEmpty(parameters.MinPrice) || !string.IsNullOrEmpty(parameters.MaxPrice))
-                {
-                    query += "AND Car.SalePrice BETWEEN @minPrice AND  @maxPrice ";
-                    cmd.Parameters.AddWithValue("@minPrice", parameters.MinPrice);
-                    cmd.Parameters.AddWithValue("@maxPrice", parameters.MaxPrice);
-                }
-
-                if (parameters.MinYear != "Any" && parameters.MaxYear != "Any")
-                {
-                    query += "AND [Car].[Year] BETWEEN @minYear AND  @maxYear ";
-                    cmd.Parameters.AddWithValue("@minYear", parameters.MinPrice);
-                    cmd.Parameters.AddWithValue("@maxYear", parameters.MaxPrice);
-                }
-
-                if (parameters.MinYear != "Any" && parameters.MaxYear == "Any")
-                {
-                    query += "AND [Car].[Year] >= @minYear ";
-                    cmd.Parameters.AddWithValue("@minYear", parameters.MinPrice);
-                }
-
-                if (parameters.MinYear == "Any" && parameters.MaxYear != "Any")
-                {
-                    query += "AND [Car].[Year] <= @maxYear ";
-                    cmd.Parameters.AddWithValue("@maxYear", parameters.MaxYear);
-                }
-
-                cmd.CommandText = query;
-
-                conn.Open();
-
-                using (SqlDataReader dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        Car row = new Car();
-
-                        row.CarID = (int)dr["CarID"];
-                        row.OnSale = (bool)dr["OnSale"];
-                        row.IsInStock = (bool)dr["IsInStock"];
-                        row.Make = new Make();
-                        row.Make.MakeID = (int)dr["MakeID"];
-                        row.Make.MakeName = dr["MakeName"].ToString();
-                        row.Model = new Model();
-                        row.Model.ModelID = (int)dr["ModelID"];
-                        row.Model.ModelName = dr["ModelName"].ToString();
-                        row.Condition = new Condition();
-                        row.Condition.ConditionID = (int)dr["ConditionID"];
-                        row.Condition.ConditionType = dr["ConditionType"].ToString();
-                        row.Year = (int)dr["Year"];
-                        row.BodyStyle = new BodyStyle();
-                        row.BodyStyle.BodyStyleID = (int)dr["BodyStyleID"];
-                        row.BodyStyle.BodyStyleName = dr["BodyStyleName"].ToString();
-                        row.Transmission = new Transmission();
-                        row.Transmission.TransmissionID = (int)dr["TransmissionID"];
-                        row.Transmission.TransmissionType = dr["TransmissionType"].ToString();
-                        row.ExteriorColor = new ExteriorColor();
-                        row.ExteriorColor.ExteriorColorID = (int)dr["ExteriorColorID"];
-                        row.ExteriorColor.Color = dr["Color"].ToString();
-                        row.InteriorColor = new InteriorColor();
-                        row.InteriorColor.InteriorColorID = (int)dr["InteriorColorID"];
-                        row.InteriorColor.Color = dr["Color"].ToString();
-                        row.Mileage = dr["Mileage"].ToString();
-                        row.VIN = dr["VIN"].ToString();
-                        row.SalePrice = (decimal)dr["SalePrice"];
-                        row.MSRP = (decimal)dr["MSRP"];
-                        row.Description = dr["Description"].ToString();
-                        row.DateAdded = dr["DateAdded"].ToString();
-                        row.Photo = dr["Photo"].ToString();
-
-                        cars.Add(row);
-                    }
+                    searchList = cars.Where(x => makesRepo.GetMakeById(x.MakeID).MakeName.ToLower().Contains(parameters.Make.ToLower())).ToList();
                 }
             }
 
-            return cars;
-        }
+            if (!string.IsNullOrEmpty(parameters.Model)) //FYI: we do not have a model null
+            {
+                if (parameters.Mileage == "used")
+                {
+                    searchList = cars.Where(x => x.ConditionID == 2 && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
+                }
+                else if (parameters.Mileage == "new")
+                {
+                    searchList = cars.Where(x => x.ConditionID == 1 && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
+                }
+                else if (parameters.OnSale == "true")
+                {
+                    searchList = cars.Where(x => x.OnSale == true && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
+                }
+                else
+                {
+                    searchList = cars.Where(x => modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
+                }
+            }
 
+            searchList2 = searchList;
+
+            if (!string.IsNullOrEmpty(parameters.MinPrice) || !string.IsNullOrEmpty(parameters.MaxPrice))
+            {
+                int resultMinPrice;
+                int.TryParse(parameters.MinPrice, out resultMinPrice);
+                int resultMaxPrice;
+                int.TryParse(parameters.MaxPrice, out resultMaxPrice);
+                searchList = searchList2.Where(x => x.SalePrice >= resultMinPrice && x.SalePrice <= resultMaxPrice).ToList();
+            }
+
+            if (parameters.MinYear != "Any" && parameters.MaxYear != "Any")
+            {
+                int resultMinYear;
+                int.TryParse(parameters.MinYear, out resultMinYear);
+                int resultMaxYear;
+                int.TryParse(parameters.MaxYear, out resultMaxYear);
+
+                searchList = searchList2.Where(x => x.Year >= resultMinYear && x.Year <= resultMaxYear).ToList();
+            }
+
+            if (parameters.MinYear != "Any" && parameters.MaxYear == "Any")
+            {
+                int resultMinYear;
+                int.TryParse(parameters.MinYear, out resultMinYear);
+
+                searchList = searchList2.Where(x => x.Year >= resultMinYear).ToList();
+            }
+
+            if (parameters.MinYear == "Any" && parameters.MaxYear != "Any")
+            {
+                int resultMaxYear;
+                int.TryParse(parameters.MaxYear, out resultMaxYear);
+
+                searchList = searchList2.Where(x => x.Year <= resultMaxYear).ToList();
+            }
+
+            List<Car> carsSearched = new List<Car>();
+
+            foreach (var car in searchList)
+            {
+                car.Model = new Model();
+                car.Model.ModelID = car.ModelID;
+                car.Model.ModelName = modelRepo.GetModelById(car.ModelID).ModelName;
+                car.Make = new Make();
+                car.Make.MakeID = car.MakeID;
+                car.Make.MakeName = makesRepo.GetMakeById(car.MakeID).MakeName;
+                car.BodyStyle = new BodyStyle();
+                car.BodyStyle.BodyStyleID = car.BodyStyleID;
+                car.BodyStyle.BodyStyleName = bodyStylesRepo.GetBodyStyleById(car.BodyStyleID).BodyStyleName;
+                car.Transmission = new Transmission();
+                car.Transmission.TransmissionID = car.TransmissionID;
+                car.Transmission.TransmissionType = transmissionsRepo.GetTransmissionById(car.TransmissionID).TransmissionType;
+                car.ExteriorColor = new ExteriorColor();
+                car.ExteriorColor.ExteriorColorID = car.ExteriorColorID;
+                car.ExteriorColor.Color = extColorsRepo.GetExteriorColorById(car.ExteriorColorID).Color;
+                car.InteriorColor = new InteriorColor();
+                car.InteriorColor.InteriorColorID = car.InteriorColorID;
+                car.InteriorColor.Color = intColorsRepo.GetInteriorColorById(car.InteriorColorID).Color;
+                carsSearched.Add(car);
+            }
+
+            return carsSearched;
+        }
+        
         public void UpdateCar(Car car)
         {
             _context.Entry(car).State = EntityState.Modified;
+            _context.SaveChanges();
         }
     }
 }

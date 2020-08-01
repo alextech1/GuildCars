@@ -110,7 +110,7 @@ namespace GuildCars.UI.Controllers
                                     Make = b.Key.MakeName,
                                     Model = b.Key.ModelName,
                                     Count = b.Count(),
-                                    StockValue = b.Select(bn => bn.SalePrice).Count().ToString()
+                                    StockValue = b.Sum(bn => bn.SalePrice).ToString()
                                 }).ToList();
                 var model = new GroupedInventoryViewModel { NewVehicles = newGroupCars, UsedVehicles = usedGroupCars };
 

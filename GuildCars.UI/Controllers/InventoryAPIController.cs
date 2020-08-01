@@ -19,14 +19,6 @@ namespace GuildCars.UI.Controllers
     //[RoutePrefix("")]
     public class InventoryAPIController : ApiController
     {
-        /*private readonly ApplicationDbContext _context;
-        public InventoryAPIController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-        public InventoryAPIController() { }*/
-
-
         [Route("api/cars/search")]
         [AcceptVerbs("GET")]
         public IHttpActionResult Search([FromUri] ListingSearchParameters parameters)

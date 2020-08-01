@@ -234,7 +234,16 @@ namespace GuildCars.UI.Controllers
                         model.Car.Photo = Path.GetFileName(filePath);
                     }
 
-                    if (Settings.GetRepositoryType() == "EF")
+                    carRepo.InsertCar(model.Car);
+                    bodyStylesRepo.InsertBodyStyle(model.Car.BodyStyle);
+                    typesRepo.InsertCondition(model.Car.Condition);
+                    extColorsRepo.InsertExteriorColor(model.Car.ExteriorColor);
+                    intColorsRepo.InsertInteriorColor(model.Car.InteriorColor);
+                    makesRepo.InsertMake(model.Car.Make);
+                    modelRepo.InsertModel(model.Car.Model);
+                    transmissionsRepo.InsertTransmission(model.Car.Transmission);
+
+                    /*if (Settings.GetRepositoryType() == "EF")
                     {
                         _context.Cars.Add(model.Car);
 
@@ -253,7 +262,7 @@ namespace GuildCars.UI.Controllers
                         makesRepo.InsertMake(model.Car.Make);
                         modelRepo.InsertModel(model.Car.Model);
                         transmissionsRepo.InsertTransmission(model.Car.Transmission);
-                    }
+                    }*/
 
                     return RedirectToAction("Vehicles");
                 }
@@ -271,7 +280,7 @@ namespace GuildCars.UI.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
-            var model = new CarEditViewModel();
+            var carViewModel = new CarEditViewModel();
 
             var carRepo = GuildRepositoryFactory.GetRepository();
             var makesRepo = MakeFactory.GetRepository();
@@ -282,38 +291,39 @@ namespace GuildCars.UI.Controllers
             var extColorsRepo = ExteriorColorFactory.GetRepository();
             var intColorsRepo = InteriorColorFactory.GetRepository();
 
-            if (model.Car.UserID != AuthorizeUtilities.GetUserId(this))
-            {
-                throw new Exception("You are not logged in.");
-            }
+            var carvm = carRepo.GetCarById(id);
 
-            CarEditViewModel viewModel = new CarEditViewModel
-            {
-                Car = carRepo.GetCarById(id),
-                Makes = makesRepo.GetMakes(),
-                MakesID = model.Car.Make.MakeID,
-                Models = modelRepo.GetModels(),
-                ModelsID = model.Car.Model.ModelID,
-                Types = typesRepo.GetConditions(),
-                TypesID = model.Car.Condition.ConditionID,
-                BodyStyles = bodyStylesRepo.GetBodyStyles(),
-                BodyStylesID = model.Car.BodyStyle.BodyStyleID,
-                Transmissions = transmissionsRepo.GetTransmissions(),
-                TransmissionsID = model.Car.Transmission.TransmissionID,
-                ExteriorColors = extColorsRepo.GetExteriorColors(),
-                ExteriorColorsID = model.Car.ExteriorColor.ExteriorColorID,
-                InteriorColors = intColorsRepo.GetInteriorColors(),
-                InteriorColorsID = model.Car.InteriorColor.InteriorColorID,
-                Year = model.Car.Year,
-                Mileage = model.Car.Mileage,
-                VIN = model.Car.VIN,
-                MSRP = model.Car.MSRP,
-                SalePrice = model.Car.SalePrice,
-                Description = model.Car.Description,
-                ImageFileName = model.Car.Photo
-            };
+            carViewModel.CarID = carvm.CarID;
+            carViewModel.Year = carvm.Year;
+            carViewModel.Make = new Make();
+            carViewModel.Makes = makesRepo.GetMakes();
+            carViewModel.MakesID = carvm.MakeID;            
+            carViewModel.Model = new Model();
+            carViewModel.Models = modelRepo.GetModels();
+            carViewModel.ModelsID = carvm.ModelID;            
+            carViewModel.Condition = new Condition();
+            carViewModel.ConditionTypes = typesRepo.GetConditions();
+            carViewModel.ConditionTypesID = carvm.ConditionID;
+            carViewModel.BodyStyle = new BodyStyle();
+            carViewModel.BodyStyles = bodyStylesRepo.GetBodyStyles();
+            carViewModel.BodyStylesID = carvm.BodyStyleID;
+            carViewModel.Transmission = new Transmission();
+            carViewModel.Transmissions = transmissionsRepo.GetTransmissions();
+            carViewModel.TransmissionsID = carvm.TransmissionID;            
+            carViewModel.ExteriorColor = new ExteriorColor();
+            carViewModel.ExteriorColors = extColorsRepo.GetExteriorColors();
+            carViewModel.ExteriorColorsID = carvm.ExteriorColorID;
+            carViewModel.InteriorColor = new InteriorColor();
+            carViewModel.InteriorColors = intColorsRepo.GetInteriorColors();
+            carViewModel.InteriorColorsID = carvm.InteriorColorID;
+            carViewModel.Mileage = carvm.Mileage;
+            carViewModel.VIN = carvm.VIN;
+            carViewModel.SalePrice = carvm.SalePrice;
+            carViewModel.MSRP = carvm.MSRP;
+            carViewModel.ImageFileName = carvm.Photo;
+            carViewModel.Description = carvm.Description;
 
-            return View(viewModel);
+            return View(carViewModel);
         }
 
         [Authorize]

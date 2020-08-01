@@ -42,11 +42,13 @@ namespace GuildCars.UI.EF
         {
             Specials specials = _context.Specials.Find(id);
             _context.Specials.Remove(specials);
+            _context.SaveChanges();
         }
 
         public void Update(Specials specials)
         {
             _context.Entry(specials).State = EntityState.Modified;
+            _context.SaveChanges();
         }
     }
 }

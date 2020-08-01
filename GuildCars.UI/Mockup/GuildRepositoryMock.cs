@@ -32,9 +32,9 @@ namespace GuildCars.UI.Mockup
                 Description = "The best car in town, come check out this great deal today", DateAdded = "01/06/2019",
                 Photo = "toyotacorolla.png"
             },
-            new Car { CarID = 4, OnSale = false, IsInStock = true, MakeID = 2, ModelID = 2, ConditionID = 2,
-                Year = 2010, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
-                Mileage = "102,000", VIN = "1ASDFOJ29J4FO4TH7", SalePrice = 12000.00M, MSRP = 12000.00M,
+            new Car { CarID = 4, OnSale = true, IsInStock = true, MakeID = 2, ModelID = 2, ConditionID = 1,
+                Year = 2009, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
+                Mileage = "78,000", VIN = "1ASDFOJ29J4FO4TH7", SalePrice = 12000.00M, MSRP = 12000.00M,
                 Description = "The best car in town, come check out this great deal today", DateAdded = "01/06/2019",
                 Photo = "toyotacorolla.png"
             },
@@ -44,15 +44,15 @@ namespace GuildCars.UI.Mockup
                 Description = "The best car in town, come check out this great deal today", DateAdded = "01/08/2019",
                 Photo = "hondacivic.png"
             },
-            new Car { CarID = 6,  OnSale = false, IsInStock = false, MakeID = 1, ModelID = 6, ConditionID = 1,
+            new Car { CarID = 6,  OnSale = true, IsInStock = true, MakeID = 1, ModelID = 6, ConditionID = 1,
                 Year = 2009, BodyStyleID = 1, TransmissionID = 2, ExteriorColorID = 1, InteriorColorID = 2,
                 Mileage = "New", VIN = "1ASDFOJ29J4FO4099", SalePrice = 10000.00M, MSRP = 12000.00M,
                 Description = "The best car in town, come check out this great deal today", DateAdded = "02/09/2019",
                 Photo = "hondaaccord.jpg"
             },
-            new Car { CarID = 7, OnSale = false, IsInStock = false, MakeID = 1,ModelID = 6,ConditionID = 1,
-                Year = 2010, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 2, InteriorColorID = 1,
-                Mileage = "New", VIN = "1ASDFOJ29J4FO43ER", SalePrice = 12000.00M, MSRP = 12000.00M,
+            new Car { CarID = 7, OnSale = false, IsInStock = false, MakeID = 1, ModelID = 6, ConditionID = 1,
+                Year = 2009, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 2, InteriorColorID = 1,
+                Mileage = "102,000", VIN = "1ASDFOJ29J4FO43ER", SalePrice = 9000.00M, MSRP = 12000.00M,
                 Description = "The best car in town, come check out this great deal today", DateAdded = "03/06/2019",
                 Photo = "hondaaccord.jpg"
             },
@@ -109,9 +109,13 @@ namespace GuildCars.UI.Mockup
                 Mileage = "New", VIN = "1ASDFOJ29J93FA231", SalePrice = 12000.00M, MSRP = 12000.00M,
                 Description = "The best car in town, come check out this great deal today", DateAdded = "10/05/2019",
                 Photo = "bmwm8.jpg"
-            }
-
-
+            },
+            new Car { CarID = 17, OnSale = false, IsInStock = false, MakeID = 5, ModelID = 10, ConditionID = 2,
+                Year = 2017, BodyStyleID = 1, TransmissionID = 1, ExteriorColorID = 1, InteriorColorID = 2,
+                Mileage = "123,000", VIN = "1ASDFOJ29J9344981", SalePrice = 12000.00M, MSRP = 12000.00M,
+                Description = "The best car in town, come check out this great deal today", DateAdded = "10/07/2019",
+                Photo = "nissanaltima.jpg"
+            },
         };
 
         public List<Car> GetAllCars()
@@ -149,11 +153,11 @@ namespace GuildCars.UI.Mockup
             {
                 if (parameters.Mileage == "used")
                 {
-                    searchList = cars.Where(x => x.Mileage != "New" && makesRepo.GetMakeById(x.MakeID).MakeName.Contains(parameters.Make.ToLower())).ToList();
+                    searchList = cars.Where(x => x.ConditionID == 2 && makesRepo.GetMakeById(x.MakeID).MakeName.Contains(parameters.Make.ToLower())).ToList();
                 }
                 else if (parameters.Mileage == "new")
                 {
-                    searchList = cars.Where(x => x.Mileage == "New" && makesRepo.GetMakeById(x.MakeID).MakeName.ToLower().Contains(parameters.Make.ToLower())).ToList();
+                    searchList = cars.Where(x => x.ConditionID == 1 && makesRepo.GetMakeById(x.MakeID).MakeName.ToLower().Contains(parameters.Make.ToLower())).ToList();
                 }
                 else if (parameters.OnSale == "true")
                 {
@@ -169,15 +173,15 @@ namespace GuildCars.UI.Mockup
             {
                 if (parameters.Mileage == "used")
                 {
-                    searchList = cars.Where(x => x.Mileage != "New" && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
+                    searchList = cars.Where(x => x.ConditionID == 2 && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
                 }
                 else if (parameters.Mileage == "new")
                 {
-                    searchList = cars.Where(x => x.Mileage == "New" && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
+                    searchList = cars.Where(x => x.ConditionID == 1 && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
                 }
                 else if (parameters.OnSale == "true")
                 {
-                    searchList = cars.Where(x => x.OnSale == true && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Make.ToLower())).ToList();
+                    searchList = cars.Where(x => x.OnSale == true && modelRepo.GetModelById(x.ModelID).ModelName.ToLower().Contains(parameters.Model.ToLower())).ToList();
                 }
                 else
                 {

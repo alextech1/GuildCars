@@ -157,11 +157,11 @@ namespace GuildCars.Data.ADO
 
                 if (parameters.Mileage == "used")
                 {
-                    query += "AND Car.Mileage != 'New' ";
+                    query += "AND Car.ConditionID = '2' ";
                 }
                 if (parameters.Mileage == "new")
                 {
-                    query += "AND Car.Mileage = 'New' ";
+                    query += "AND Car.ConditionID = '1' ";
                 }
                 if (parameters.OnSale == "true")
                 {
@@ -177,7 +177,7 @@ namespace GuildCars.Data.ADO
                 if (!string.IsNullOrEmpty(parameters.Model))
                 {
                     query += "AND Model.ModelName LIKE @modelName ";
-                    cmd.Parameters.AddWithValue("@modelName", parameters.Make + '%');
+                    cmd.Parameters.AddWithValue("@modelName", parameters.Model + '%');
                 }
 
                 if (!string.IsNullOrEmpty(parameters.MinPrice) || !string.IsNullOrEmpty(parameters.MaxPrice))
@@ -190,14 +190,14 @@ namespace GuildCars.Data.ADO
                 if (parameters.MinYear != "Any" && parameters.MaxYear != "Any")
                 {
                     query += "AND [Car].[Year] BETWEEN @minYear AND  @maxYear ";
-                    cmd.Parameters.AddWithValue("@minYear", parameters.MinPrice);
-                    cmd.Parameters.AddWithValue("@maxYear", parameters.MaxPrice);
+                    cmd.Parameters.AddWithValue("@minYear", parameters.MinYear);
+                    cmd.Parameters.AddWithValue("@maxYear", parameters.MaxYear);
                 }
 
                 if (parameters.MinYear != "Any" && parameters.MaxYear == "Any")
                 {
                     query += "AND [Car].[Year] >= @minYear ";
-                    cmd.Parameters.AddWithValue("@minYear", parameters.MinPrice);
+                    cmd.Parameters.AddWithValue("@minYear", parameters.MinYear);
                 }
 
                 if (parameters.MinYear == "Any" && parameters.MaxYear != "Any")

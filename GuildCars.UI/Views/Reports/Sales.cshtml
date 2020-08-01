@@ -116,11 +116,11 @@
 
 
 
-                    $('#searchResults').append(tableHtml.toString());
+                    //$('#searchResults').append(tableHtml.toString());
                 });
 
-                var endTable = '</table></div>'
-                $('#searchResults').append(endTable.toString());
+                tableHtml += '</table></div>'
+                $('#searchResults').append(tableHtml.toString());
 
             },
             error: function () {
